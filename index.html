@@ -2,7 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="theme-color" content="#0B1D3A"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
   <title>Sai Mohith — AI Integration Enthusiast</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -41,7 +44,11 @@
       --blue-light:    #7BBCF5;
     }
 
-    html { scroll-behavior: smooth; }
+    html {
+      scroll-behavior: smooth;
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
+    }
     body {
       font-family: 'DM Sans', sans-serif;
       font-weight: 300;
@@ -49,6 +56,9 @@
       background: var(--white);
       color: var(--navy);
       overflow-x: hidden;
+      -webkit-tap-highlight-color: transparent;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
       transition: background 0.35s ease, color 0.35s ease;
     }
 
@@ -487,15 +497,7 @@
     }
 
     /* responsive for zen subsection */
-    @media (max-width: 960px) {
-      .zen-spotlight { grid-template-columns: 1fr; gap: 40px; padding: 40px 32px; }
-      .zen-spotlight::before { display: none; }
-    }
-    @media (max-width: 480px) {
-      .zen-spotlight { padding: 32px 20px; }
-      .zen-spot-title { font-size: 2rem; }
-      .zen-qr-ring img { width: 140px; height: 140px; }
-    }
+
     .zen-card {
       cursor: pointer;
       background: linear-gradient(135deg, #0D2348 0%, #0B1D3A 60%, #0D2348 100%) !important;
@@ -794,234 +796,230 @@
 
     /* ══════════════════════════════════════
        RESPONSIVE — CROSS PLATFORM
-       Breakpoints:
-         xl  ≥ 1280px  (large desktop)
-         lg  ≥ 960px   (desktop)
-         md  < 960px   (tablet landscape)
-         sm  < 768px   (tablet portrait / large phone)
-         xs  < 480px   (phone)
+       xs  < 480px   phone
+       sm  < 640px   large phone
+       md  < 768px   tablet portrait
+       lg  < 960px   tablet landscape
     ══════════════════════════════════════ */
 
     /* ── TABLET LANDSCAPE (< 960px) ── */
     @media (max-width: 960px) {
       :root { --gap: 80px; }
 
-      /* nav: hide links, show hamburger */
-      nav { padding: 16px 24px; gap: 16px; }
+      nav { padding: 16px 24px; }
       .nav-links { display: none; }
       .nav-mobile-menu {
         display: flex; flex-direction: column; gap: 5px;
-        background: none; border: none; cursor: pointer; padding: 4px;
+        background: none; border: none; cursor: pointer; padding: 6px;
+        touch-action: manipulation;
       }
       .nav-mobile-menu span {
         display: block; width: 22px; height: 2px;
         background: rgba(255,255,255,.8); border-radius: 2px;
         transition: transform .3s, opacity .3s;
       }
-      body.dark .nav-mobile-menu span { background: rgba(255,255,255,.8); }
-      .mobile-nav-open { display: none; }
 
-      /* hero stacks */
-      #hero { grid-template-columns: 1fr; min-height: auto; }
-      .hero-left { padding: 110px 32px 64px; min-height: 90vh; justify-content: flex-end; }
+      #hero { grid-template-columns: 1fr; min-height: 100svh; min-height: 100vh; }
+      .hero-left { padding: 100px 28px 60px; min-height: 100svh; min-height: 100vh; justify-content: flex-end; }
       .hero-right { display: none; }
 
-      /* creator band text smaller */
-      .band-item { padding: 0 20px; font-size: .65rem; }
+      .band-item { padding: 0 18px; font-size: .62rem; }
 
-      /* sections */
-      section { padding: var(--gap) 32px; }
-      .watermark { right: 24px; font-size: 5rem; }
+      section { padding: var(--gap) 28px; }
+      .watermark { right: 20px; font-size: 5rem; opacity: .3; }
 
-      /* about */
-      .about-grid { grid-template-columns: 1fr; gap: 40px; }
-      .about-img-frame { max-width: 280px; }
+      .about-grid { grid-template-columns: 1fr; gap: 36px; }
+      .about-img-frame { max-width: 260px; }
 
-      /* education */
-      .edu-grid { grid-template-columns: 1fr; gap: 16px; }
+      .edu-grid { grid-template-columns: 1fr; gap: 14px; }
 
-      /* experience */
-      .exp-item { grid-template-columns: 1fr; gap: 8px; }
-      .exp-meta { flex-direction: row; gap: 16px; align-items: center; padding-top: 0; }
+      .exp-item { grid-template-columns: 1fr; gap: 6px; padding: 40px 0; }
+      .exp-meta { flex-direction: row; gap: 14px; align-items: center; padding-top: 0; }
 
-      /* projects */
-      .projects-grid { grid-template-columns: repeat(2,1fr); gap: 2px; }
-      section#projects { padding: var(--gap) 32px; }
+      .projects-grid { grid-template-columns: repeat(2,1fr); }
+      section#projects { padding: var(--gap) 28px; }
 
-      /* skills */
       .skills-grid { grid-template-columns: repeat(2,1fr); gap: 20px; }
 
-      /* contact */
-      .contact-grid { grid-template-columns: 1fr; gap: 48px; }
-
-      /* achievements */
+      .contact-grid { grid-template-columns: 1fr; gap: 44px; }
       .ach-grid { grid-template-columns: 1fr; gap: 12px; }
 
-      /* footer */
-      footer { flex-direction: column; text-align: center; padding: 36px 24px; gap: 12px; }
+      footer { flex-direction: column; text-align: center; padding: 32px 24px; gap: 10px; }
+
+      .zen-spotlight { grid-template-columns: 1fr; gap: 36px; padding: 36px 28px; }
+      .zen-spotlight::before { display: none; }
     }
 
-    /* ── TABLET PORTRAIT & LARGE PHONES (< 768px) ── */
+    /* ── TABLET PORTRAIT (< 768px) ── */
     @media (max-width: 768px) {
       :root { --gap: 64px; }
 
       nav { padding: 14px 20px; }
 
-      /* hero */
-      .hero-left { padding: 100px 24px 56px; }
-      .hero-badge { font-size: .66rem; }
-      .hero-tagline { font-size: .93rem; max-width: 100%; }
-      .hero-ctas { flex-wrap: wrap; gap: 12px; }
-      .btn-primary, .btn-ghost { font-size: .75rem; padding: 12px 22px; }
+      .hero-left { padding: 90px 20px 52px; }
+      .hero-badge { font-size: .64rem; padding: 6px 12px; }
+      .hero-tagline { font-size: .92rem; }
+      .hero-ctas { flex-wrap: wrap; gap: 10px; }
 
-      /* sections */
-      section { padding: var(--gap) 24px; }
+      section { padding: var(--gap) 20px; }
       .watermark { display: none; }
-      .sec-title { margin-bottom: 40px; }
+      .sec-title { margin-bottom: 36px; }
 
-      /* about */
-      .about-img-frame { max-width: 100%; }
-      .stats-mini { gap: 20px; flex-wrap: wrap; }
+      .about-img-frame { max-width: 100%; max-height: 320px; overflow: hidden; }
+      .about-img-frame img { height: 320px; }
+      .stats-mini { gap: 18px; flex-wrap: wrap; }
 
-      /* projects: single col */
       .projects-grid { grid-template-columns: 1fr; }
-      .proj-card { padding: 32px 24px; }
+      .proj-card { padding: 30px 22px; }
 
-      /* skills */
-      .skills-grid { grid-template-columns: repeat(2,1fr); gap: 16px; }
+      .skills-grid { grid-template-columns: repeat(2,1fr); gap: 14px; }
 
-      /* podcast */
-      .pod-content { padding: 48px 24px; }
+      .pod-content { padding: 44px 20px; }
       .pod-ring:nth-child(3), .pod-ring:nth-child(4) { display: none; }
 
-      /* contact card */
-      .contact-card { padding: 32px 24px; }
+      .contact-card { padding: 30px 22px; }
       .email-box { font-size: .78rem; word-break: break-all; }
 
-      /* exp */
-      .exp-meta { flex-direction: column; gap: 4px; align-items: flex-start; }
-      .exp-item { padding: 40px 0; }
+      .exp-meta { flex-direction: column; gap: 3px; align-items: flex-start; }
 
-      /* modals */
-      .modal-box { padding: 36px 28px 32px; }
-      .modal-title { font-size: 1.35rem; }
+      .modal-box { padding: 32px 24px 28px; }
+      .modal-title { font-size: 1.3rem; }
+
+      .zen-spotlight { padding: 32px 20px; }
     }
 
     /* ── PHONES (< 480px) ── */
     @media (max-width: 480px) {
-      :root { --gap: 56px; }
+      :root { --gap: 52px; }
 
       nav { padding: 12px 16px; }
 
-      /* hero */
-      .hero-left { padding: 90px 20px 48px; }
-      .hero-badge { padding: 6px 12px; font-size: .64rem; margin-bottom: 14px; }
-      .hero-eyebrow { font-size: .68rem; margin-bottom: 18px; }
-      .hero-ctas { flex-direction: column; align-items: flex-start; gap: 12px; }
-      .btn-primary, .btn-ghost { width: 100%; justify-content: center; }
+      .hero-left { padding: 80px 16px 44px; }
+      .hero-badge { font-size: .62rem; margin-bottom: 12px; }
+      .hero-eyebrow { font-size: .66rem; margin-bottom: 16px; }
+      .hero-ctas { flex-direction: column; align-items: stretch; gap: 10px; }
+      .btn-primary, .btn-ghost { justify-content: center; padding: 14px 20px; font-size: .76rem; }
 
-      /* sections */
       section { padding: var(--gap) 16px; }
 
-      /* about */
-      .about-texts { gap: 16px; }
-      .about-bio { font-size: .93rem; }
-      .pull-quote { font-size: .95rem; padding: 14px 18px; }
-      .stats-mini { gap: 16px; }
-      .stat-mini-num { font-size: 1.6rem; }
+      .about-texts { gap: 14px; }
+      .about-bio { font-size: .91rem; }
+      .pull-quote { font-size: .93rem; padding: 13px 16px; }
+      .stats-mini { gap: 14px; }
+      .stat-mini-num { font-size: 1.55rem; }
 
-      /* education */
-      .edu-card { padding: 28px 20px; }
-      .edu-degree { font-size: 1.1rem; }
+      .edu-card { padding: 24px 18px; }
+      .edu-degree { font-size: 1.05rem; }
+      .edu-school { font-size: .82rem; }
 
-      /* experience */
-      .exp-item { padding: 32px 0; }
-      .exp-role { font-size: 1.25rem; }
-      .exp-bullet { font-size: .88rem; }
+      .exp-item { padding: 28px 0; }
+      .exp-role { font-size: 1.2rem; }
+      .exp-company { font-size: .82rem; }
+      .exp-bullet { font-size: .86rem; padding-left: 14px; }
 
-      /* projects */
-      .proj-card { padding: 28px 20px; }
-      .proj-title { font-size: 1.1rem; }
+      .proj-card { padding: 24px 16px; }
+      .proj-title { font-size: 1.05rem; }
       .proj-desc { font-size: .82rem; }
+      .proj-tag { font-size: .6rem; padding: 3px 8px; }
 
-      /* skills */
-      .skills-grid { grid-template-columns: 1fr; gap: 24px; }
+      .skills-grid { grid-template-columns: 1fr; gap: 20px; }
 
-      /* cert / ach */
-      .cert-item { flex-direction: row; }
-      .ach-card { padding: 24px 18px; }
-      .ach-title { font-size: .88rem; }
+      .cert-item { gap: 12px; }
+      .cert-name { font-size: .88rem; }
 
-      /* podcast */
-      .pod-content { padding: 40px 20px; }
-      .pod-title { font-size: 2.2rem; }
-      .pod-tagline { font-size: .9rem; }
-      .pod-badge { font-size: .68rem; padding: 10px 20px; }
+      .ach-card { padding: 20px 16px; gap: 14px; }
+      .ach-title { font-size: .86rem; }
+      .ach-sub { font-size: .78rem; }
 
-      /* contact */
-      .contact-card { padding: 28px 20px; }
-      .contact-card-title { font-size: 1.5rem; }
-      .email-box { font-size: .74rem; padding: 12px 14px; }
-      .copy-btn { width: 100%; justify-content: center; }
+      .pod-content { padding: 36px 16px; }
+      .pod-title { font-size: 2rem; }
+      .pod-tagline { font-size: .88rem; }
+      .pod-badge { font-size: .66rem; padding: 9px 18px; }
+      .pod-mic { width: 52px; height: 52px; font-size: 1.4rem; }
 
-      /* modal */
-      .modal-overlay { padding: 16px; }
-      .modal-box { padding: 32px 20px 28px; }
-      .modal-title { font-size: 1.2rem; }
-      .modal-body { font-size: .88rem; }
+      .contact-card { padding: 24px 16px; }
+      .contact-card-title { font-size: 1.4rem; }
+      .email-box { font-size: .72rem; padding: 11px 13px; word-break: break-all; }
+      .copy-btn { width: 100%; justify-content: center; font-size: .76rem; padding: 13px; }
+      .contact-row { padding: 16px 0; }
 
-      /* footer */
-      footer { padding: 28px 16px; font-size: .72rem; }
+      .modal-overlay { padding: 12px; }
+      .modal-box { padding: 28px 16px 24px; }
+      .modal-title { font-size: 1.15rem; }
+      .modal-body { font-size: .86rem; }
+
+      footer { padding: 24px 16px; font-size: .7rem; gap: 8px; }
+      .footer-name { font-size: 1rem; }
+
+      .zen-spotlight { padding: 24px 16px; gap: 28px; }
+      .zen-spot-title { font-size: 1.8rem; }
+      .zen-spot-desc { font-size: .88rem; }
+      .zen-qr-ring img { width: 130px; height: 130px; }
+      .zen-qr-card { padding: 24px 16px; }
+      .zen-sub-divider { margin-top: 44px; }
     }
 
-    /* ── TOUCH DEVICES: disable hover effects that feel broken on tap ── */
+    /* ── TOUCH DEVICES — disable mouse-only effects ── */
     @media (hover: none) and (pointer: coarse) {
-      .cursor, .cursor-ring { display: none; }
-      .sparkle { display: none; }
-      .proj-card:hover { background: #112650; transform: none; }
-      .proj-card:hover::after { width: 0; }
-      .proj-card:hover .proj-corner { opacity: 0; }
-      .edu-card:hover { transform: none; box-shadow: none; border-color: var(--border); }
-      .edu-card:hover::before { height: 0; }
-      .ach-card:hover { transform: none; box-shadow: none; border-color: var(--border); }
-      a.contact-row:hover { padding-left: 0; }
-      a.contact-row:hover .contact-icon-wrap { background: var(--navy-pale); color: var(--navy); }
-      .zen-card:hover .zen-overlay { opacity: 0; }
-      .btn-primary:hover { transform: none; }
-      .copy-btn:hover { transform: none; }
+      .cursor, .cursor-ring { display: none !important; }
 
-      /* on touch, tap zen card to show QR */
-      .zen-card.qr-active .zen-overlay { opacity: 1; pointer-events: all; }
-      .zen-card.qr-active .zen-qr-wrap { transform: translateY(0) scale(1); }
+      /* remove hover transforms that break on tap */
+      .proj-card:hover { background: #112650 !important; transform: none !important; }
+      .proj-card:hover::after { width: 0 !important; }
+      .edu-card:hover { transform: none !important; box-shadow: none !important; border-color: var(--border) !important; }
+      .edu-card:hover::before { height: 0 !important; }
+      .ach-card:hover { transform: none !important; box-shadow: none !important; }
+      a.contact-row:hover { padding-left: 0 !important; }
+      a.contact-row:hover .contact-icon-wrap { background: var(--navy-pale) !important; color: var(--navy) !important; }
+      .btn-primary:hover { transform: none !important; }
+      .copy-btn:hover { transform: none !important; }
+      .cert-item:hover { padding-left: 0 !important; }
+
+      /* bigger tap targets */
+      .nav-mobile-menu { padding: 10px; }
+      a, button { min-height: 44px; }
+      .contact-row { min-height: 56px; }
+      .proj-tag { padding: 5px 10px; }
+
+      /* zen card: tap to show QR */
+      .zen-card.qr-active .zen-overlay { opacity: 1 !important; pointer-events: all !important; }
+      .zen-card.qr-active .zen-qr-wrap { transform: translateY(0) scale(1) !important; }
     }
 
     /* ── MOBILE NAV DRAWER ── */
+    .nav-mobile-menu { display: none; }
     .mobile-drawer {
-      position: fixed; inset: 0; z-index: 200;
-      background: var(--white);
+      position: fixed; inset: 0; z-index: 2000;
+      background: #0B1D3A;
       display: flex; flex-direction: column;
-      padding: 80px 40px 40px;
+      padding: env(safe-area-inset-top, 80px) 40px 40px;
+      padding-top: max(80px, env(safe-area-inset-top, 80px));
       transform: translateX(100%);
       transition: transform .4s cubic-bezier(.25,.46,.45,.94);
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
     }
+    body.dark .mobile-drawer { background: #070F1C; }
     .mobile-drawer.open { transform: translateX(0); }
     .mobile-drawer a {
       font-family: 'Playfair Display', serif;
       font-size: 2rem; font-weight: 700;
-      color: var(--navy); text-decoration: none;
-      padding: 16px 0; border-bottom: 1px solid var(--border);
+      color: #FFFFFF; text-decoration: none;
+      padding: 18px 0; border-bottom: 1px solid rgba(255,255,255,.1);
       letter-spacing: -.01em;
       transition: color .2s, padding-left .2s;
+      touch-action: manipulation;
+      display: block;
     }
-    .mobile-drawer a:hover, .mobile-drawer a:active { color: var(--blue); padding-left: 8px; }
+    .mobile-drawer a:active { color: #6AAEE8; }
     .drawer-close {
-      position: absolute; top: 20px; right: 20px;
-      background: none; border: none; font-size: 1.5rem;
-      cursor: pointer; color: var(--navy); padding: 8px;
+      position: absolute; top: max(20px, env(safe-area-inset-top, 20px)); right: 20px;
+      background: rgba(255,255,255,.1); border: none; border-radius: 50%;
+      width: 40px; height: 40px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; color: #fff; font-size: 1.1rem;
+      touch-action: manipulation;
     }
-    body.dark .mobile-drawer { background: #0D1B2E; }
-    body.dark .mobile-drawer a { color: #E8F0FB; }
-    body.dark .drawer-close { color: #E8F0FB; }
   </style>
 </head>
 <body>
@@ -1199,13 +1197,15 @@
           <span class="exp-type">Full-time</span>
         </div>
         <div>
-          <div class="exp-role">Jr. Software Development Engineer</div>
-          <div class="exp-company">Chella Software Pvt. Ltd.</div>
+          <div class="exp-role">Junior Developer</div>
+          <div class="exp-company">Chella Software Pvt. Ltd. · Madurai, Tamil Nadu</div>
           <div class="exp-bullets">
-            <div class="exp-bullet">Optimised performance-critical C modules for a high-throughput trading platform for India's leading stock exchange — delivering measurable gains in execution speed and memory efficiency under peak loads.</div>
-            <div class="exp-bullet">Designed and enhanced core trade-flow architecture with deep expertise in end-to-end trading workflows and mission-critical transaction processing.</div>
-            <div class="exp-bullet">Built and maintained automated build &amp; deployment pipelines using Makefiles and shell scripting, streamlining multi-node builds and accelerating release cycles.</div>
-            <div class="exp-bullet">Managed full SDLC across multiple deliverables — from business analysis and system design to deployment and production support.</div>
+            <div class="exp-bullet">Involved in the full Software Development Lifecycle (SDLC) across multiple deliverables — from business requirement analysis and system design through to implementation, testing, deployment, and production support, ensuring high-quality, on-time delivery.</div>
+            <div class="exp-bullet">Optimised performance-critical C modules for a high-throughput trading platform serving India's leading stock exchange — delivering substantial gains in execution speed and memory efficiency under peak market loads while reducing operational overhead and manual intervention.</div>
+            <div class="exp-bullet">Designed and enhanced core trade-flow architecture, gaining deep expertise in end-to-end trading system workflows and mission-critical transaction processing pipelines.</div>
+            <div class="exp-bullet">Optimised performance-critical trading application code by leveraging knowledge of multithreading, MPI, data structures, and space-time complexity — improving execution speed and resource efficiency under high-load conditions.</div>
+            <div class="exp-bullet">Developed and maintained build and deployment automation using Makefiles and shell scripts, streamlining multi-node compilation workflows and significantly reducing manual effort in the release process.</div>
+            <div class="exp-bullet">Refactored and extended the trading application codebase to enhance space utilisation and system reliability, significantly reducing manual intervention in day-to-day operations.</div>
           </div>
         </div>
       </div>
@@ -1470,7 +1470,7 @@
             <div class="contact-icon-wrap">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
             </div>
-            <div><div class="contact-row-label">Email</div><div class="contact-row-value">ysaimohith07@gmail.com</div></div>
+            <div><div class="contact-row-label">Email</div><div class="contact-row-value"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="0e777d6f67636166677a663e394e69636f6762206d6163">[email&#160;protected]</a></div></div>
           </div>
           <a href="https://www.linkedin.com/in/yerramsetti-sai-mohith/" target="_blank" class="contact-row">
             <div class="contact-icon-wrap">
@@ -1496,7 +1496,7 @@
         <div class="contact-card">
           <div class="contact-card-title">Say hello 👋</div>
           <div class="contact-card-sub">Best way to reach me — I reply within 24 hours.</div>
-          <div class="email-box">ysaimohith07@gmail.com</div>
+          <div class="email-box"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="146d67757d797b7c7d607c2423547379757d783a777b79">[email&#160;protected]</a></div>
           <button class="copy-btn" onclick="navigator.clipboard.writeText('ysaimohith07@gmail.com');this.textContent='Copied! ✓';setTimeout(()=>this.textContent='Copy email',2000)">Copy email</button>
         </div>
       </div>
@@ -1524,7 +1524,7 @@
     </div>
   </div>
 
-  <script>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
     // ── CURSOR (desktop only) ──
     const isTouch = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
     const cur = document.getElementById('cursor');
@@ -1548,14 +1548,27 @@
     document.getElementById('themeToggle').addEventListener('click', () => {});
 
     // ── MOBILE DRAWER ──
-    const menuBtn     = document.getElementById('menuBtn');
+    const menuBtn      = document.getElementById('menuBtn');
     const mobileDrawer = document.getElementById('mobileDrawer');
-    const drawerClose = document.getElementById('drawerClose');
-    function openDrawer(){  mobileDrawer.classList.add('open');    document.body.style.overflow='hidden'; }
-    function closeDrawer(){ mobileDrawer.classList.remove('open'); document.body.style.overflow=''; }
-    menuBtn.addEventListener('click', openDrawer);
-    drawerClose.addEventListener('click', closeDrawer);
-    mobileDrawer.addEventListener('click', e=>{ if(e.target===mobileDrawer) closeDrawer(); });
+    const drawerClose  = document.getElementById('drawerClose');
+    function openDrawer(){
+      mobileDrawer.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
+    }
+    function closeDrawer(){
+      mobileDrawer.classList.remove('open');
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+    }
+    if (menuBtn) menuBtn.addEventListener('click', openDrawer);
+    if (drawerClose) drawerClose.addEventListener('click', closeDrawer);
+    // close on link tap (already inline onclick, but belt-and-suspenders)
+    document.querySelectorAll('.mobile-drawer a').forEach(a => {
+      a.addEventListener('click', closeDrawer);
+    });
 
     // ── REVEAL ON SCROLL ──
     const obs = new IntersectionObserver(entries=>{
@@ -1606,11 +1619,12 @@
     const zenCard = document.querySelector('.zen-card');
     if (zenCard && isTouch) {
       zenCard.addEventListener('click', e => {
-        // If tapping the overlay itself, close it
-        if (e.target.closest('.zen-overlay') && !e.target.closest('.zen-qr-wrap')) {
-          zenCard.classList.remove('qr-active'); return;
+        const overlay = zenCard.querySelector('.zen-overlay');
+        if (overlay && overlay.contains(e.target)) {
+          zenCard.classList.remove('qr-active');
+        } else {
+          zenCard.classList.toggle('qr-active');
         }
-        zenCard.classList.toggle('qr-active');
       });
     }
 
