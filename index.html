@@ -670,7 +670,13 @@
       transition: border-color .3s, transform .3s, box-shadow .3s;
     }
     .ach-card:hover { border-color: var(--blue); transform: translateY(-3px); box-shadow: 0 16px 48px rgba(74,144,217,.1); }
-    .ach-icon { font-size: 1.5rem; line-height: 1; flex-shrink: 0; margin-top: 2px; }
+    .ach-icon {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: rgba(74,144,217,.1); color: var(--blue);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    body.dark .ach-icon { background: rgba(74,144,217,.15); }
     .ach-title { font-weight: 500; color: var(--navy); margin-bottom: 5px; font-size: .93rem; }
     .ach-sub { font-size: .82rem; color: var(--muted); line-height: 1.55; }
 
@@ -754,14 +760,17 @@
     .modal-overlay {
       position: fixed; inset: 0; z-index: 10000;
       background: rgba(11,29,58,.6); backdrop-filter: blur(6px);
-      display: flex; align-items: center; justify-content: center; padding: 24px;
+      display: flex; align-items: flex-start; justify-content: center;
+      padding: max(24px, env(safe-area-inset-top, 24px)) 16px max(24px, env(safe-area-inset-bottom, 24px));
+      overflow-y: auto; -webkit-overflow-scrolling: touch;
       opacity: 0; pointer-events: none;
       transition: opacity .3s cubic-bezier(.25,.46,.45,.94);
     }
     .modal-overlay.open { opacity: 1; pointer-events: all; }
     .modal-box {
-      background: var(--white); border-radius: 4px; padding: 44px 40px 40px;
-      max-width: 460px; width: 100%; position: relative;
+      background: var(--white); border-radius: 16px; padding: 44px 40px 40px;
+      max-width: 520px; width: 100%; position: relative;
+      margin: auto;
       transform: translateY(24px) scale(.97);
       transition: transform .35s cubic-bezier(.25,.46,.45,.94), opacity .35s;
       opacity: 0;
@@ -777,7 +786,14 @@
       transition: background .2s, color .2s, border-color .2s;
     }
     .modal-close:hover { background: var(--navy); color: #fff; border-color: var(--navy); }
-    .modal-icon { font-size: 2rem; margin-bottom: 14px; line-height: 1; }
+    .modal-icon {
+      width: 44px; height: 44px; border-radius: 10px;
+      background: var(--navy); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem; font-family: 'Playfair Display', serif;
+      margin-bottom: 14px; line-height: 1;
+    }
+    body.dark .modal-icon { background: #1a3060; }
     .modal-tag {
       display: inline-flex; align-items: center; gap: 6px;
       font-family: 'DM Mono', monospace; font-size: .68rem;
@@ -786,8 +802,14 @@
     }
     .modal-tag::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--blue); }
     .modal-title { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 700; line-height: 1.15; color: var(--navy); margin-bottom: 14px; letter-spacing: -.01em; }
-    .modal-body { font-size: .93rem; color: var(--text); line-height: 1.75; margin-bottom: 24px; }
-    .modal-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+    .modal-body {
+      font-size: .93rem; color: var(--text); line-height: 1.78;
+      margin-bottom: 24px; word-break: break-word;
+    }
+    .modal-body strong { color: var(--navy); }
+    body.dark .modal-body strong { color: #E8F0FB; }
+    .modal-body em { color: var(--blue); font-style: normal; font-weight: 500; }
+    .modal-pills { display: flex; flex-wrap: wrap; gap: 8px; padding-bottom: 4px; }
     .modal-pill { font-size: .7rem; letter-spacing: .09em; text-transform: uppercase; padding: 5px 12px; border: 1px solid var(--border); color: var(--muted); border-radius: 2px; background: var(--off-white); }
 
     /* ── SPARKLE ── */
@@ -943,8 +965,8 @@
       .copy-btn { width: 100%; justify-content: center; font-size: .76rem; padding: 13px; }
       .contact-row { padding: 16px 0; }
 
-      .modal-overlay { padding: 12px; }
-      .modal-box { padding: 28px 16px 24px; }
+      .modal-overlay { padding: max(12px, env(safe-area-inset-top, 12px)) 12px max(12px, env(safe-area-inset-bottom, 12px)); }
+      .modal-box { padding: 28px 18px 24px; border-radius: 14px; }
       .modal-title { font-size: 1.15rem; }
       .modal-body { font-size: .86rem; }
 
@@ -1020,6 +1042,137 @@
       cursor: pointer; color: #fff; font-size: 1.1rem;
       touch-action: manipulation;
     }
+    /* ══ BEYOND THE CODE ══ */
+    .beyond-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+    .beyond-card {
+      background: var(--off-white); border: 1px solid var(--border);
+      border-radius: 16px; padding: 28px 24px;
+      display: flex; flex-direction: column; gap: 10px;
+      transition: box-shadow .3s, transform .3s, border-color .3s;
+      position: relative; overflow: hidden;
+    }
+    body.dark .beyond-card { background: #0D1B2E; }
+    [data-bdialog] { cursor: pointer; }
+    [data-bdialog]:hover {
+      box-shadow: 0 8px 32px rgba(74,144,217,.13);
+      transform: translateY(-3px);
+      border-color: var(--blue-light);
+    }
+
+    /* featured wide cards */
+    .beyond-feat {
+      grid-column: span 3;
+      background: var(--navy); color: #fff;
+      border-color: transparent;
+      display: grid; grid-template-columns: 1fr auto;
+      gap: 0; padding: 0; align-items: stretch;
+    }
+    body.dark .beyond-feat { background: #112650; }
+    .beyond-feat:hover { border-color: #6AAEE8; box-shadow: 0 8px 40px rgba(74,144,217,.2); }
+    .beyond-feat-left { padding: 36px 36px 36px 36px; display: flex; flex-direction: column; gap: 12px; }
+    .beyond-feat-right {
+      background: rgba(255,255,255,.06);
+      border-left: 1px solid rgba(255,255,255,.1);
+      min-width: 160px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 28px;
+      padding: 32px 24px;
+    }
+    .beyond-stat-block { text-align: center; }
+    .beyond-stat-num {
+      display: block; font-family: 'Playfair Display',serif;
+      font-size: 2rem; font-weight: 700; color: #fff; line-height: 1;
+    }
+    .beyond-stat-label {
+      display: block; font-size: .68rem; letter-spacing: .08em;
+      text-transform: uppercase; color: rgba(255,255,255,.45); margin-top: 4px;
+    }
+
+    /* small 1-col cards */
+    .beyond-sm { /* default styles from .beyond-card */ }
+
+    .beyond-card-icon {
+      width: 40px; height: 40px; border-radius: 10px;
+      background: rgba(74,144,217,.1); color: var(--blue);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    body.dark .beyond-card-icon { background: rgba(74,144,217,.15); }
+    .beyond-card-tag {
+      font-size: .7rem; font-weight: 500; letter-spacing: .08em;
+      text-transform: uppercase; color: var(--blue);
+    }
+    .beyond-feat .beyond-card-tag { color: #6AAEE8; }
+    .beyond-card-title {
+      font-family: 'Playfair Display',serif; font-size: 1.3rem;
+      font-weight: 700; color: var(--navy); line-height: 1.25;
+    }
+    .beyond-feat .beyond-card-title { color: #fff; font-size: 1.6rem; }
+    .beyond-card-desc { font-size: .88rem; color: var(--text-muted); line-height: 1.65; }
+    .beyond-feat .beyond-card-desc { color: rgba(255,255,255,.7); }
+    .beyond-feat .beyond-card-desc strong { color: #fff; }
+    .beyond-card-desc strong { color: var(--navy); }
+    body.dark .beyond-card-desc strong { color: #E8F0FB; }
+    .beyond-card-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .beyond-artists { display: flex; flex-direction: column; gap: 8px; }
+    .beyond-artist {
+      display: flex; align-items: center; gap: 10px;
+      font-size: .86rem; color: rgba(255,255,255,.8);
+    }
+    .beyond-artist strong { color: #fff; }
+    .beyond-artist-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: #6AAEE8; flex-shrink: 0;
+    }
+    .beyond-click-hint {
+      font-size: .72rem; color: #6AAEE8; letter-spacing: .04em;
+      margin-top: auto; font-family: 'DM Mono',monospace;
+    }
+    .beyond-card .beyond-click-hint { color: var(--blue); opacity: .7; }
+
+    /* beyond modal specific */
+    .bdialog-fest-item {
+      border-bottom: 1px solid var(--border);
+      padding: 14px 0;
+    }
+    .bdialog-fest-item:last-child { border-bottom: none; }
+    .bdialog-fest-name {
+      font-family: 'Playfair Display',serif; font-size: 1rem; font-weight: 700;
+      color: var(--navy); margin-bottom: 6px;
+    }
+    body.dark .bdialog-fest-name { color: #E8F0FB; }
+    .bdialog-fest-roles { display: flex; flex-wrap: wrap; gap: 6px; }
+    .bdialog-photo-placeholder {
+      width: 100%; aspect-ratio: 4/3; max-height: 260px;
+      background: var(--off-white); border: 2px dashed var(--border);
+      border-radius: 10px; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 8px;
+      color: var(--text-muted); font-size: .82rem; font-family: 'DM Mono',monospace;
+    }
+    body.dark .bdialog-photo-placeholder { background: #0D1B2E; }
+    .bdialog-photo-placeholder img {
+      width: 100%; height: 100%; object-fit: cover; border-radius: 8px; display: block;
+    }
+    .bdialog-photo-placeholder.has-photo { border: none; background: none; padding: 0; }
+
+    @media (max-width: 960px) {
+      .beyond-grid { grid-template-columns: repeat(2,1fr); }
+      .beyond-feat { grid-column: span 2; grid-template-columns: 1fr; }
+      .beyond-feat-right { flex-direction: row; border-left: none; border-top: 1px solid rgba(255,255,255,.1); padding: 20px 28px; min-width: unset; }
+    }
+    @media (max-width: 600px) {
+      .beyond-grid { grid-template-columns: 1fr; }
+      .beyond-feat { grid-column: span 1; }
+      .beyond-feat-left { padding: 24px 20px; }
+      .beyond-feat .beyond-card-title { font-size: 1.3rem; }
+      .beyond-feat-right { flex-direction: row; gap: 20px; padding: 16px 20px; }
+      .beyond-stat-num { font-size: 1.5rem; }
+    }
+
   </style>
 </head>
 <body>
@@ -1035,6 +1188,7 @@
       <li><a href="#experience">Experience</a></li>
       <li><a href="#projects">Projects</a></li>
       <li><a href="#podcast">Podcast</a></li>
+      <li><a href="#beyond">Beyond</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
     <button class="nav-mobile-menu" id="menuBtn" aria-label="Open menu">
@@ -1055,7 +1209,8 @@
     <a href="#experience" onclick="closeDrawer()">Experience</a>
     <a href="#projects"   onclick="closeDrawer()">Projects</a>
     <a href="#podcast"    onclick="closeDrawer()">Podcast</a>
-    <a href="#contact"    onclick="closeDrawer()">Contact</a>
+    <a href="#beyond"    onclick="closeDrawer()">Beyond</a>
+    <a href="#contact"   onclick="closeDrawer()">Contact</a>
   </div>
 
   <!-- HERO -->
@@ -1422,22 +1577,31 @@
     </div>
     <div class="ach-grid reveal">
       <div class="ach-card">
-        <div class="ach-icon">🏆</div>
+        <div class="ach-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4a2 2 0 00-2 2v1a2 2 0 002 2h2"/><path d="M18 9h2a2 2 0 012 2v1a2 2 0 01-2 2h-2"/><path d="M6 9V5a2 2 0 012-2h8a2 2 0 012 2v4"/><path d="M6 9a6 6 0 0012 0"/><path d="M10 21h4"/><path d="M12 15v6"/></svg>
+        </div>
         <div><div class="ach-title">11th Rank — International Statistics Olympiad</div><div class="ach-sub">Secured 11th place at the prestigious CR Rao International Statistics Olympiad.</div></div>
       </div>
       <div class="ach-card">
-        <div class="ach-icon">🎖️</div>
+        <div class="ach-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>
+        </div>
         <div><div class="ach-title">'A' Grade — NCC 'C' Certificate</div><div class="ach-sub">National Cadet Corps 'C' Certificate with 'A' Grade, demonstrating discipline and commitment.</div></div>
       </div>
       <div class="ach-card">
-        <div class="ach-icon">🎨</div>
-        <div><div class="ach-title">Cultural Secretary &amp; GDSC Core</div><div class="ach-sub">Cultural Secretary (2023–24), Cultural Core (2022–23), and Core of Google Developer Student Club.</div></div>
+        <div class="ach-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        </div>
+        <div><div class="ach-title">Cultural Secretary & GDSC Core</div><div class="ach-sub">Cultural Secretary (2023–24), Cultural Core (2022–23), and Core of Google Developer Student Club.</div></div>
       </div>
       <div class="ach-card">
-        <div class="ach-icon">🌱</div>
-        <div><div class="ach-title">Secretary — NGO Vidhai</div><div class="ach-sub">Secretary of NGO Vidhai, working towards SDG 4 (Quality Education) and SDG 6 (Clean Water &amp; Sanitation).</div></div>
+        <div class="ach-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+        </div>
+        <div><div class="ach-title">Secretary — NGO Vidhai</div><div class="ach-sub">Secretary of NGO Vidhai, working towards SDG 4 (Quality Education) and SDG 6 (Clean Water & Sanitation).</div></div>
       </div>
     </div>
+
   </section>
 
   <!-- PODCAST -->
@@ -1455,11 +1619,153 @@
     </div>
   </section>
 
-  <!-- CONTACT -->
-  <section id="contact">
+  <!-- BEYOND THE CODE -->
+  <section id="beyond">
     <div class="watermark">09</div>
     <div class="reveal">
-      <div class="sec-label">09 — Contact</div>
+      <div class="sec-label">09 — Life Beyond the Code</div>
+      <h2 class="sec-title">More than<br>a developer</h2>
+    </div>
+
+    <div class="beyond-grid reveal">
+
+      <!-- CULTURAL SECRETARY — featured wide -->
+      <div class="beyond-card beyond-feat beyond-cult reveal" data-bdialog="cult">
+        <div class="beyond-feat-left">
+          <div class="beyond-card-tag">Cultural Secretary · IIITDM Kancheepuram</div>
+          <h3 class="beyond-card-title">Samgatha — Annual Cultural Fest</h3>
+          <p class="beyond-card-desc">Led and organised <strong>Samgatha</strong>, IIITDM's flagship inter-college annual cultural fest as Cultural Secretary — with <strong>800+ attendees</strong> and headline pro show performances.</p>
+          <div class="beyond-artists">
+            <div class="beyond-artist"><div class="beyond-artist-dot"></div><strong>DJ Julia Bliss</strong> — headline DJ set</div>
+            <div class="beyond-artist"><div class="beyond-artist-dot"></div><strong>Mysore Express</strong> — live band performance</div>
+          </div>
+          <div class="beyond-card-tags" style="margin-top:12px;">
+            <span class="proj-tag">Event Management</span>
+            <span class="proj-tag">800+ Attendees</span>
+            <span class="proj-tag">Pro Show</span>
+            <span class="proj-tag">Inter-College</span>
+          </div>
+          <div class="beyond-click-hint">Click for full fest history ↗</div>
+        </div>
+        <div class="beyond-feat-right">
+          <div class="beyond-stat-block"><span class="beyond-stat-num">800+</span><span class="beyond-stat-label">Attendees</span></div>
+          <div class="beyond-stat-block"><span class="beyond-stat-num">2</span><span class="beyond-stat-label">Pro Artists</span></div>
+          <div class="beyond-stat-block"><span class="beyond-stat-num">4+</span><span class="beyond-stat-label">Fests Led</span></div>
+        </div>
+      </div>
+
+      <!-- NGO VIDHAI — featured wide -->
+      <div class="beyond-card beyond-feat beyond-ngo reveal" data-bdialog="ngo">
+        <div class="beyond-feat-left">
+          <div class="beyond-card-tag">NGO Vidhai · SDG 4 & SDG 6</div>
+          <h3 class="beyond-card-title">Content Creator → President</h3>
+          <p class="beyond-card-desc">Joined NGO Vidhai as a <strong>Content Creation & Video Editing</strong> member and rose to become <strong>President</strong> — teaching underprivileged students for NMMS & NTSE exams, running a water purification project, and leading outreach for education and clean water.</p>
+          <div class="beyond-card-tags" style="margin-top:12px;">
+            <span class="proj-tag">SDG 4 · Education</span>
+            <span class="proj-tag">SDG 6 · Clean Water</span>
+            <span class="proj-tag">Content Creation</span>
+            <span class="proj-tag">President</span>
+          </div>
+          <div class="beyond-click-hint">Click for full journey ↗</div>
+        </div>
+        <div class="beyond-feat-right">
+          <div class="beyond-stat-block"><span class="beyond-stat-num">2</span><span class="beyond-stat-label">SDGs</span></div>
+          <div class="beyond-stat-block"><span class="beyond-stat-num">3</span><span class="beyond-stat-label">Roles Held</span></div>
+          <div class="beyond-stat-block"><span class="beyond-stat-num">↑</span><span class="beyond-stat-label">To President</span></div>
+        </div>
+      </div>
+
+      <!-- NCC — with photo modal -->
+      <div class="beyond-card beyond-sm reveal" data-bdialog="ncc">
+        <div class="beyond-card-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>
+        </div>
+        <div class="beyond-card-tag">National Cadet Corps</div>
+        <h3 class="beyond-card-title">NCC Cadet</h3>
+        <p class="beyond-card-desc">Earned the NCC <strong>'C' Certificate with 'A' Grade</strong> — the highest distinction, reflecting discipline and leadership.</p>
+        <div class="beyond-click-hint">Click to view photo ↗</div>
+      </div>
+
+      <!-- GOLD MEDAL — with photo modal -->
+      <div class="beyond-card beyond-sm reveal" data-bdialog="medal">
+        <div class="beyond-card-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="14" r="6"/><path d="M9 2l1.5 4h3L15 2"/><path d="M12 11v3l2 1"/></svg>
+        </div>
+        <div class="beyond-card-tag">Inter-IIIT Fest</div>
+        <h3 class="beyond-card-title">Gold Medal — Basketball</h3>
+        <p class="beyond-card-desc">Won <strong>Gold</strong> at the inter-IIIT sports & cultural fest — competing against IIITs from across India.</p>
+        <div class="beyond-click-hint">Click to view photo ↗</div>
+      </div>
+
+      <!-- FESTS — click to expand all fest roles -->
+      <div class="beyond-card beyond-sm reveal" data-bdialog="fests">
+        <div class="beyond-card-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <div class="beyond-card-tag">Samgatha & Vashisht</div>
+        <h3 class="beyond-card-title">Fest Roles</h3>
+        <p class="beyond-card-desc">Held multiple coordinating roles across <strong>4 fests</strong> — from cultural core to publicity, decor and organising committee.</p>
+        <div class="beyond-click-hint">Click for full breakdown ↗</div>
+      </div>
+
+      <!-- GDSC -->
+      <div class="beyond-card beyond-sm reveal">
+        <div class="beyond-card-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        </div>
+        <div class="beyond-card-tag">Google Developer Student Club</div>
+        <h3 class="beyond-card-title">GDSC Core Member</h3>
+        <p class="beyond-card-desc">Organised technical workshops, hackathons, and developer community events on campus at IIITDM.</p>
+      </div>
+
+      <!-- CS CLUB -->
+      <div class="beyond-card beyond-sm reveal">
+        <div class="beyond-card-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        </div>
+        <div class="beyond-card-tag">IIITDM · CS Club</div>
+        <h3 class="beyond-card-title">Coordinator — CS Club</h3>
+        <p class="beyond-card-desc">Coordinated coding competitions, technical talks, and peer learning sessions for the Computer Science Club.</p>
+      </div>
+
+      <!-- ALUMNI -->
+      <div class="beyond-card beyond-sm reveal">
+        <div class="beyond-card-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+        </div>
+        <div class="beyond-card-tag">Alumni Relations</div>
+        <h3 class="beyond-card-title">Coordinator — Alumni Affairs</h3>
+        <p class="beyond-card-desc">Bridged students and alumni for mentorship, opportunities, and institutional growth.</p>
+      </div>
+
+      <!-- CINEMATICS -->
+      <div class="beyond-card beyond-sm reveal">
+        <div class="beyond-card-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/></svg>
+        </div>
+        <div class="beyond-card-tag">Cinematics Club</div>
+        <h3 class="beyond-card-title">Coordinator — Cinematics</h3>
+        <p class="beyond-card-desc">Managed film screenings, short film productions, and video content for campus events.</p>
+      </div>
+
+      <!-- DANCE CLUB -->
+      <div class="beyond-card beyond-sm reveal">
+        <div class="beyond-card-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="4" r="1.5"/><path d="M8.5 8.5C9.5 7 11 6 12 6s2.5 1 3.5 2.5L17 13l-3 1-1-3-1 7H9l-1-7-2 2-1-4 3.5-3.5z"/><path d="M9.5 21l.5-4M14.5 21l-.5-4"/></svg>
+        </div>
+        <div class="beyond-card-tag">IIITDM · Dance Club</div>
+        <h3 class="beyond-card-title">Coordinator — Dance Club</h3>
+        <p class="beyond-card-desc">Coordinated the college Dance Club — organising performances, rehearsals, and choreography for cultural events and inter-college fests.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="watermark">10</div>
+    <div class="reveal">
+      <div class="sec-label">10 — Contact</div>
       <h2 class="sec-title">Let's build<br>something together</h2>
     </div>
     <div class="contact-grid">
@@ -1631,13 +1937,13 @@
     // ── STAT DIALOGS ──
     const dialogs = {
       olympiad: {
-        icon:'🏆', tag:'Achievement',
+        icon:'◆', tag:'Achievement',
         title:'11th Rank — CR Rao International Statistics Olympiad',
         body:'Competed in the prestigious CR Rao International Statistics Olympiad — one of the most respected statistics competitions in the country — and secured 11th rank nationally. This reflects a strong foundation in statistical theory, probability, and applied data reasoning that directly underpins the ML and data science work I do today.',
         pills:['Statistics','Probability','Data Reasoning','National Level','CR Rao Olympiad']
       },
       ml: {
-        icon:'🤖', tag:'Research · ML',
+        icon:'◎', tag:'Research · ML',
         title:'89% Accuracy — Allele Classification Model',
         body:'As part of a sponsored R&D project and research paper on genetic data analysis, I designed and trained a Random Forest Classifier to classify alleles and study their evolutionary origin. Through hyperparameter tuning and feature engineering on biological datasets, the model achieved 89% accuracy on unseen test data — contributing to a peer-reviewed research study.',
         pills:['Random Forest','Hyperparameter Tuning','Feature Engineering','Python','Scikit-learn','Research Paper']
@@ -1654,14 +1960,115 @@
       mIcon.textContent=d.icon; mTag.textContent=d.tag;
       mTitle.textContent=d.title; mBody.textContent=d.body;
       mPills.innerHTML=d.pills.map(p=>`<span class="modal-pill">${p}</span>`).join('');
-      overlay.classList.add('open'); document.body.style.overflow='hidden';
+      document.body.dataset.scrollY = window.scrollY;
+      document.body.style.overflow = 'hidden';
+      overlay.classList.add('open');
+      overlay.scrollTop = 0;
     }
-    function closeDialog(){ overlay.classList.remove('open'); document.body.style.overflow=''; }
+    function closeDialog(){
+      overlay.classList.remove('open');
+      document.body.style.overflow = '';
+      window.scrollTo({ top: parseInt(document.body.dataset.scrollY || '0'), behavior: 'instant' });
+    }
 
-    document.querySelectorAll('[data-dialog]').forEach(el=>el.addEventListener('click',()=>openDialog(el.dataset.dialog)));
-    mClose.addEventListener('click',closeDialog);
-    overlay.addEventListener('click',e=>{ if(e.target===overlay) closeDialog(); });
-    document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeDialog(); });
+    // ── BEYOND DIALOGS ──
+    const beyondData = {
+      cult: {
+        icon: '✦', tag: 'Cultural Secretary · IIITDM',
+        title: 'Samgatha — The Cultural Legacy',
+        body: `As <strong>Cultural Secretary of IIITDM Kancheepuram</strong>, the centrepiece was organising <strong>Samgatha</strong> — the institute's annual inter-college cultural fest. Over <strong>800+ attendees</strong> turned up from colleges across the country, with a landmark pro show featuring <strong>DJ Julia Bliss</strong> and live band <strong>Mysore Express</strong>.<br><br>Beyond the main fest, the role involved overseeing all cultural activities, clubs, and events across the academic year — from budgeting and permissions to artist coordination and logistics.`,
+        pills: ['Cultural Secretary', '800+ Attendees', 'DJ Julia Bliss', 'Mysore Express', 'Inter-College', 'Event Management']
+      },
+      ngo: {
+        icon: '◈', tag: 'NGO Vidhai · SDG 4 & SDG 6',
+        title: 'From Member to President — NGO Vidhai',
+        body: `<strong>NGO Vidhai</strong> is a student-led organisation working towards two UN Sustainable Development Goals: <em>SDG 4 (Quality Education for All)</em> and <em>SDG 6 (Clean Water & Sanitation)</em>.<br><br>
+<strong>What we did on the ground:</strong> Collaborated with nearby government schools to work with underprivileged and underserved students — teaching, mentoring, and preparing them for competitive exams including <strong>NMMS</strong> (National Means-cum-Merit Scholarship) and <strong>NTSE</strong> (National Talent Search Examination). The goal was to open doors for students who otherwise wouldn't have access to structured exam preparation.<br><br>
+On the SDG 6 front, Vidhai took up a <strong>water purification project</strong> — working towards ensuring access to clean drinking water for communities in need.<br><br>
+<strong>My journey:</strong> Started as a <strong>Content Creation & Video Editing</strong> member — producing outreach videos, social media campaigns, and awareness content. Took on increasing responsibility over time, and eventually became <strong>President of NGO Vidhai</strong> — leading the team, coordinating all initiatives, and driving the mission forward. Also represented Vidhai at <strong>Vashisht '23</strong> as part of the organising committee.`,
+        pills: ['President', 'Content Creation', 'Video Editing', 'SDG 4 · Education', 'SDG 6 · Clean Water', 'NMMS Prep', 'NTSE Prep', 'Water Purification', 'Govt. School Outreach']
+      },
+      ncc: {
+        icon: '◇', tag: 'National Cadet Corps',
+        title: "NCC 'A' Grade — 'C' Certificate",
+        body: `Completed full NCC training and earned the <strong>'C' Certificate with 'A' Grade</strong> — the highest distinction available in the National Cadet Corps programme.<br><br>The 'A' Grade reflects exceptional performance across drills, leadership exercises, field training, and written examinations — demonstrating discipline, commitment, and national service ethos.`,
+        pills: ["'C' Certificate", "'A' Grade", 'NCC', 'Leadership', 'Discipline'],
+        photo: 'ncc.jpg'
+      },
+      medal: {
+        icon: '◉', tag: 'Inter-IIIT Fest · Basketball',
+        title: 'Gold Medal — Inter-IIIT',
+        body: `Won the <strong>Gold Medal</strong> at the inter-IIIT sports & cultural fest, representing IIITDM Kancheepuram in the basketball competition — competing against teams from IIITs across India and coming out on top.`,
+        pills: ['Gold Medal', 'Basketball', 'Inter-IIIT', 'Sports'],
+        photo: 'medal.jpg'
+      },
+      fests: {
+        icon: '▣', tag: 'Samgatha & Vashisht',
+        title: 'Fest Roles — Full Breakdown',
+        body: ``,
+        pills: [],
+        fests: [
+          { name: 'Samgatha \'24 (Annual Cultural Fest)', roles: ['Cultural Secretary', 'Pro Show Lead', 'Event Head'] },
+          { name: 'Samgatha \'23 (Annual Cultural Fest)', roles: ['Cultural Core', 'Publicity Co-Lead'] },
+          { name: 'Samgatha \'22 (Annual Cultural Fest)', roles: ['Cultural Coordinator', 'Decor Coordinator', 'Publicity Coordinator'] },
+          { name: "Vashisht '23 (Technical Fest)", roles: ['Vidhai President Representative', 'GDSC Core', 'Organising Committee'] },
+          { name: "Vashisht '23 (Technical Fest)", roles: ['CS Club Coordinator', 'Organising Committee'] },
+        ]
+      }
+    };
+
+    document.querySelectorAll('[data-bdialog]').forEach(el => {
+      el.addEventListener('click', () => {
+        const key = el.dataset.bdialog;
+        const d = beyondData[key];
+        if (!d) return;
+        const overlay = document.getElementById('modalOverlay');
+        document.getElementById('mIcon').textContent  = d.icon;
+        document.getElementById('mTag').textContent   = d.tag;
+        document.getElementById('mTitle').textContent = d.title;
+
+        // body
+        const bodyEl = document.getElementById('mBody');
+        if (d.fests) {
+          let html = '<div style="display:flex;flex-direction:column;gap:0;">';
+          d.fests.forEach(f => {
+            html += `<div class="bdialog-fest-item">
+              <div class="bdialog-fest-name">${f.name}</div>
+              <div class="bdialog-fest-roles">${f.roles.map(r=>`<span class="proj-tag">${r}</span>`).join('')}</div>
+            </div>`;
+          });
+          html += '</div>';
+          bodyEl.innerHTML = html;
+        } else {
+          bodyEl.innerHTML = d.body;
+        }
+
+        // photo
+        const pillsEl = document.getElementById('mPills');
+        let pillsHTML = '';
+        if (d.photo) {
+          pillsHTML += `<div class="bdialog-photo-placeholder" id="photoWrap">
+            <img src="${d.photo}" alt="${d.title}" onerror="this.parentElement.classList.remove('has-photo');this.parentElement.innerHTML='<svg width=\\'32\\' height=\\'32\\' viewBox=\\'0 0 24 24\\' fill=\\'none\\' stroke=\\'currentColor\\' stroke-width=\\'1.5\\'><rect x=\\'3\\' y=\\'3\\' width=\\'18\\' height=\\'18\\' rx=\\'2\\'></rect><circle cx=\\'8.5\\' cy=\\'8.5\\' r=\\'1.5\\'></circle><path d=\\'M21 15l-5-5L5 21\\'></path></svg><span>${d.photo}</span><span style=\\'opacity:.5;font-size:.68rem\\'>Upload this file to your repo</span>'" class="has-photo" style="width:100%;height:100%;object-fit:cover;border-radius:8px;display:block;" />
+          </div>`;
+          pillsHTML += '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;">';
+          d.pills.forEach(p => pillsHTML += `<span class="proj-tag">${p}</span>`);
+          pillsHTML += '</div>';
+        } else {
+          d.pills.forEach(p => pillsHTML += `<span class="proj-tag">${p}</span>`);
+        }
+        pillsEl.innerHTML = pillsHTML;
+        document.body.dataset.scrollY = window.scrollY;
+        document.body.style.overflow = 'hidden';
+        overlay.classList.add('open');
+        overlay.scrollTop = 0;
+      });
+    });
+    document.querySelectorAll('[data-dialog]').forEach(el => {
+      el.addEventListener('click', () => openDialog(el.dataset.dialog));
+    });
+    mClose.addEventListener('click', closeDialog);
+    overlay.addEventListener('click', e => { if (e.target === overlay) closeDialog(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDialog(); });
   </script>
 </body>
 </html>
