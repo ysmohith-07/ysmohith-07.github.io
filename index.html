@@ -83,30 +83,67 @@
     body.hovering .cursor-ring { width: 52px; height: 52px; border-color: var(--blue-light); }
 
     /* ── NAV ── */
+    /* ── NAV ── */
     nav {
       position: fixed; top: 0; width: 100%; z-index: 1000;
-      padding: 22px 60px;
+      padding: 18px 48px;
       background: #0B1D3A;
       box-shadow: 0 1px 0 rgba(74,144,217,.15);
       display: flex; justify-content: flex-end; align-items: center; gap: 32px;
     }
-    body.dark nav { background: #070F1C; box-shadow: 0 1px 0 rgba(74,144,217,.1); }
-    .nav-links { display: flex; gap: 36px; list-style: none; }
+    body.dark nav { background: #070F1C; }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
     .nav-links a {
-      text-decoration: none;
-      color: rgba(255,255,255,.6);
-      font-size: .82rem; font-weight: 400;
-      letter-spacing: .07em; text-transform: uppercase;
+      text-decoration: none; color: rgba(255,255,255,.65);
+      font-size: .78rem; font-weight: 400;
+      letter-spacing: .08em; text-transform: uppercase;
       position: relative; padding-bottom: 3px;
-      transition: color .3s;
+      transition: color .25s;
     }
-    .nav-links a:hover { color: #ffffff; }
+    .nav-links a:hover { color: #fff; }
     .nav-links a::after {
       content: ''; position: absolute; bottom: 0; left: 0;
       width: 0; height: 1.5px; background: #6AAEE8;
-      transition: width .35s cubic-bezier(.25,.46,.45,.94);
+      transition: width .3s;
     }
     .nav-links a:hover::after { width: 100%; }
+    .nav-mobile-menu {
+      display: none; flex-direction: column; gap: 5px;
+      background: none; border: none; cursor: pointer; padding: 6px;
+      touch-action: manipulation;
+    }
+    .nav-mobile-menu span {
+      display: block; width: 22px; height: 2px;
+      background: rgba(255,255,255,.8); border-radius: 2px;
+      transition: transform .3s, opacity .3s;
+    }
+    /* ── MOBILE DRAWER ── */
+    .mobile-drawer {
+      position: fixed; inset: 0; z-index: 2000;
+      background: #0B1D3A;
+      display: flex; flex-direction: column;
+      padding: max(80px, env(safe-area-inset-top, 80px)) 40px 40px;
+      transform: translateX(100%);
+      transition: transform .4s cubic-bezier(.25,.46,.45,.94);
+      overflow-y: auto; -webkit-overflow-scrolling: touch;
+    }
+    body.dark .mobile-drawer { background: #070F1C; }
+    .mobile-drawer.open { transform: translateX(0); }
+    .mobile-drawer a {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem; font-weight: 700;
+      color: #fff; text-decoration: none;
+      padding: 18px 0; border-bottom: 1px solid rgba(255,255,255,.1);
+      display: block; touch-action: manipulation;
+    }
+    .mobile-drawer a:active { color: #6AAEE8; }
+    .drawer-close {
+      position: absolute; top: max(20px, env(safe-area-inset-top, 20px)); right: 20px;
+      background: rgba(255,255,255,.1); border: none; border-radius: 50%;
+      width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
+      cursor: pointer; color: #fff; font-size: 1.1rem; touch-action: manipulation;
+    }
+
     /* nav links — always white on dark nav */
 
     /* theme toggle */
@@ -139,7 +176,7 @@
     }
     .hero-left {
       background: #0B1D3A;
-      padding: 140px 60px 80px;
+      padding: 120px 60px 80px;
       display: flex; flex-direction: column; justify-content: flex-end;
       position: relative; overflow: hidden;
     }
@@ -221,7 +258,7 @@
     /* hero right */
     .hero-right {
       background: var(--off-white);
-      padding: 140px 60px 80px;
+      padding: 70px 60px 80px;
       display: flex; flex-direction: column; justify-content: center;
       position: relative;
     }
@@ -745,9 +782,8 @@
     /* ── FOOTER ── */
     footer {
       background: #0B1D3A; color: rgba(255,255,255,.3);
-      padding: 44px 60px;
-      display: flex; justify-content: space-between; align-items: center;
-      flex-wrap: wrap; gap: 16px;
+      padding: 32px 60px;
+      display: flex; justify-content: center; align-items: center;
       border-top: 1px solid rgba(255,255,255,.07);
     }
     body.dark footer { background: #070F1C; }
@@ -828,18 +864,9 @@
     @media (max-width: 960px) {
       :root { --gap: 80px; }
 
-      nav { padding: 16px 24px; }
+      nav { padding: 14px 20px; }
       .nav-links { display: none; }
-      .nav-mobile-menu {
-        display: flex; flex-direction: column; gap: 5px;
-        background: none; border: none; cursor: pointer; padding: 6px;
-        touch-action: manipulation;
-      }
-      .nav-mobile-menu span {
-        display: block; width: 22px; height: 2px;
-        background: rgba(255,255,255,.8); border-radius: 2px;
-        transition: transform .3s, opacity .3s;
-      }
+      .nav-mobile-menu { display: flex; }
 
       #hero { grid-template-columns: 1fr; min-height: 100svh; min-height: 100vh; }
       .hero-left { padding: 100px 28px 60px; min-height: 100svh; min-height: 100vh; justify-content: flex-end; }
@@ -870,6 +897,10 @@
 
       .zen-spotlight { grid-template-columns: 1fr; gap: 36px; padding: 36px 28px; }
       .zen-spotlight::before { display: none; }
+
+      .beyond-grid { grid-template-columns: repeat(2,1fr); }
+      .beyond-feat { grid-column: span 2; grid-template-columns: 1fr; }
+      .beyond-feat-right { flex-direction: row; border-left: none; border-top: 1px solid rgba(255,255,255,.1); padding: 20px 28px; min-width: unset; }
     }
 
     /* ── TABLET PORTRAIT (< 768px) ── */
@@ -878,7 +909,7 @@
 
       nav { padding: 14px 20px; }
 
-      .hero-left { padding: 90px 20px 52px; }
+      .hero-left { padding: 52px 20px 52px; }
       .hero-badge { font-size: .64rem; padding: 6px 12px; }
       .hero-tagline { font-size: .92rem; }
       .hero-ctas { flex-wrap: wrap; gap: 10px; }
@@ -916,7 +947,7 @@
 
       nav { padding: 12px 16px; }
 
-      .hero-left { padding: 80px 16px 44px; }
+      .hero-left { padding: 44px 16px 44px; }
       .hero-badge { font-size: .62rem; margin-bottom: 12px; }
       .hero-eyebrow { font-size: .66rem; margin-bottom: 16px; }
       .hero-ctas { flex-direction: column; align-items: stretch; gap: 10px; }
@@ -998,7 +1029,6 @@
       .cert-item:hover { padding-left: 0 !important; }
 
       /* bigger tap targets */
-      .nav-mobile-menu { padding: 10px; }
       a, button { min-height: 44px; }
       .contact-row { min-height: 56px; }
       .proj-tag { padding: 5px 10px; }
@@ -1009,7 +1039,6 @@
     }
 
     /* ── MOBILE NAV DRAWER ── */
-    .nav-mobile-menu { display: none; }
     .mobile-drawer {
       position: fixed; inset: 0; z-index: 2000;
       background: #0B1D3A;
@@ -1181,13 +1210,14 @@
   <div class="cursor-ring" id="cursorRing"></div>
 
   <!-- NAV -->
+
+
   <nav id="navbar">
     <ul class="nav-links">
       <li><a href="#about">About</a></li>
       <li><a href="#education">Education</a></li>
       <li><a href="#experience">Experience</a></li>
       <li><a href="#projects">Projects</a></li>
-      <li><a href="#podcast">Podcast</a></li>
       <li><a href="#beyond">Beyond</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
@@ -1201,16 +1231,14 @@
     </button>
   </nav>
 
-  <!-- MOBILE DRAWER -->
   <div class="mobile-drawer" id="mobileDrawer">
     <button class="drawer-close" id="drawerClose" aria-label="Close menu">✕</button>
     <a href="#about"      onclick="closeDrawer()">About</a>
     <a href="#education"  onclick="closeDrawer()">Education</a>
     <a href="#experience" onclick="closeDrawer()">Experience</a>
     <a href="#projects"   onclick="closeDrawer()">Projects</a>
-    <a href="#podcast"    onclick="closeDrawer()">Podcast</a>
-    <a href="#beyond"    onclick="closeDrawer()">Beyond</a>
-    <a href="#contact"   onclick="closeDrawer()">Contact</a>
+    <a href="#beyond"     onclick="closeDrawer()">Beyond</a>
+    <a href="#contact"    onclick="closeDrawer()">Contact</a>
   </div>
 
   <!-- HERO -->
@@ -1481,30 +1509,38 @@
       <div class="skill-group">
         <div class="skill-group-title">Languages</div>
         <div class="skill-item">Python</div>
-        <div class="skill-item">C</div>
-        <div class="skill-item">SQL</div>
+        <div class="skill-item">C / C++</div>
+        <div class="skill-item">SQL (Postgres, MySQL)</div>
+        <div class="skill-item">Core Java</div>
+        <div class="skill-item">JavaScript</div>
         <div class="skill-item">Shell Scripting</div>
       </div>
       <div class="skill-group">
         <div class="skill-group-title">AI / ML</div>
-        <div class="skill-item">LangChain</div>
-        <div class="skill-item">LangGraph</div>
+        <div class="skill-item">LLM Integration</div>
+        <div class="skill-item">Agents & Prompt Engineering</div>
+        <div class="skill-item">RAG</div>
+        <div class="skill-item">LangChain & LangGraph</div>
+        <div class="skill-item">Deep Learning</div>
+        <div class="skill-item">Machine Learning</div>
         <div class="skill-item">Feature Engineering</div>
-        <div class="skill-item">Claude Code</div>
       </div>
       <div class="skill-group">
-        <div class="skill-group-title">Tools &amp; Infra</div>
-        <div class="skill-item">Git &amp; GitHub</div>
-        <div class="skill-item">Makefiles</div>
+        <div class="skill-group-title">Concepts</div>
+        <div class="skill-item">Data Science</div>
+        <div class="skill-item">Cybersecurity</div>
+        <div class="skill-item">Systems Thinking & Design</div>
         <div class="skill-item">MPI Messaging</div>
-        <div class="skill-item">Cursor</div>
+        <div class="skill-item">Makefiles</div>
       </div>
       <div class="skill-group">
-        <div class="skill-group-title">Data &amp; Viz</div>
-        <div class="skill-item">Power BI</div>
-        <div class="skill-item">Tableau</div>
+        <div class="skill-group-title">Tools</div>
+        <div class="skill-item">n8n</div>
+        <div class="skill-item">Flowise</div>
         <div class="skill-item">Postman</div>
-        <div class="skill-item">Pandas / NumPy</div>
+        <div class="skill-item">Microsoft Power BI</div>
+        <div class="skill-item">Microsoft Excel</div>
+        <div class="skill-item">Git & GitHub</div>
       </div>
     </div>
   </section>
@@ -1552,8 +1588,23 @@
     <div class="cert-list reveal">
       <div class="cert-item">
         <div class="cert-dot"></div>
+        <div class="cert-name">BCG GenAI Job Simulation</div>
+        <div class="cert-issuer">BCG · Forage</div>
+      </div>
+      <div class="cert-item">
+        <div class="cert-dot"></div>
         <div class="cert-name">MTA — Security Fundamentals</div>
         <div class="cert-issuer">Microsoft</div>
+      </div>
+      <div class="cert-item">
+        <div class="cert-dot"></div>
+        <div class="cert-name">Data Analytics Essentials</div>
+        <div class="cert-issuer">Cisco</div>
+      </div>
+      <div class="cert-item">
+        <div class="cert-dot"></div>
+        <div class="cert-name">Python Basics for Data Science</div>
+        <div class="cert-issuer">IBM</div>
       </div>
       <div class="cert-item">
         <div class="cert-dot"></div>
@@ -1562,7 +1613,7 @@
       </div>
       <div class="cert-item">
         <div class="cert-dot"></div>
-        <div class="cert-name">Data Privacy Certification</div>
+        <div class="cert-name">Summer School on Data Privacy</div>
         <div class="cert-issuer">IIIT Bangalore</div>
       </div>
     </div>
@@ -1776,7 +1827,7 @@
             <div class="contact-icon-wrap">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
             </div>
-            <div><div class="contact-row-label">Email</div><div class="contact-row-value"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="0e777d6f67636166677a663e394e69636f6762206d6163">[email&#160;protected]</a></div></div>
+            <div><div class="contact-row-label">Email</div><div class="contact-row-value">ysaimohith07@gmail.com</div></div>
           </div>
           <a href="https://www.linkedin.com/in/yerramsetti-sai-mohith/" target="_blank" class="contact-row">
             <div class="contact-icon-wrap">
@@ -1802,7 +1853,7 @@
         <div class="contact-card">
           <div class="contact-card-title">Say hello 👋</div>
           <div class="contact-card-sub">Best way to reach me — I reply within 24 hours.</div>
-          <div class="email-box"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="146d67757d797b7c7d607c2423547379757d783a777b79">[email&#160;protected]</a></div>
+          <div class="email-box">ysaimohith07@gmail.com</div>
           <button class="copy-btn" onclick="navigator.clipboard.writeText('ysaimohith07@gmail.com');this.textContent='Copied! ✓';setTimeout(()=>this.textContent='Copy email',2000)">Copy email</button>
         </div>
       </div>
@@ -1811,9 +1862,7 @@
 
   <!-- FOOTER -->
   <footer>
-    <div class="footer-name">Mohith.</div>
-    <div class="footer-copy">© 2025 Yerramsetti Sai Mohith. All rights reserved.</div>
-    <div class="footer-right">Built with <span>♥</span> · Hosted on GitHub Pages</div>
+    <div class="footer-copy">© 2026 Yerramsetti Sai Mohith. All rights reserved.</div>
   </footer>
 
   <!-- MODAL -->
@@ -1830,7 +1879,7 @@
     </div>
   </div>
 
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  <script>
     // ── CURSOR (desktop only) ──
     const isTouch = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
     const cur = document.getElementById('cursor');
@@ -1848,124 +1897,7 @@
       });
     }
 
-    // ── NAV SCROLL ──
-    const navbar = document.getElementById('navbar');
-    // nav is always fixed dark — no dynamic colour switching needed
-    document.getElementById('themeToggle').addEventListener('click', () => {});
-
-    // ── MOBILE DRAWER ──
-    const menuBtn      = document.getElementById('menuBtn');
-    const mobileDrawer = document.getElementById('mobileDrawer');
-    const drawerClose  = document.getElementById('drawerClose');
-    function openDrawer(){
-      mobileDrawer.classList.add('open');
-      document.body.style.overflow = 'hidden';
-      document.body.style.position = 'fixed';
-      document.body.style.width = '100%';
-    }
-    function closeDrawer(){
-      mobileDrawer.classList.remove('open');
-      document.body.style.overflow = '';
-      document.body.style.position = '';
-      document.body.style.width = '';
-    }
-    if (menuBtn) menuBtn.addEventListener('click', openDrawer);
-    if (drawerClose) drawerClose.addEventListener('click', closeDrawer);
-    // close on link tap (already inline onclick, but belt-and-suspenders)
-    document.querySelectorAll('.mobile-drawer a').forEach(a => {
-      a.addEventListener('click', closeDrawer);
-    });
-
-    // ── REVEAL ON SCROLL ──
-    const obs = new IntersectionObserver(entries=>{
-      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); } });
-    },{threshold:.1,rootMargin:'0px 0px -40px 0px'});
-    document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
-
-    // ── DARK MODE ──
-    const themeToggle = document.getElementById('themeToggle');
-    const themeIcon   = document.getElementById('themeIcon');
-    if(window.matchMedia('(prefers-color-scheme: dark)').matches) setDark();
-    function setDark(){  document.body.classList.add('dark');    themeIcon.textContent='🌙'; }
-    function setLight(){ document.body.classList.remove('dark'); themeIcon.textContent='☀️'; }
-    themeToggle.addEventListener('click',()=>document.body.classList.contains('dark')?setLight():setDark());
-
-    // ── SPARKLE TRAIL (desktop only) ──
-    if (!isTouch) {
-      let lastSpark=0;
-      document.addEventListener('mousemove',e=>{
-        const now=Date.now(); if(now-lastSpark<60) return; lastSpark=now;
-        const s=document.createElement('div'); s.className='sparkle';
-        const size=4+Math.random()*5; const hue=200+Math.random()*40;
-        s.style.cssText=`left:${e.clientX}px;top:${e.clientY}px;width:${size}px;height:${size}px;background:hsl(${hue},80%,65%);`;
-        document.body.appendChild(s); setTimeout(()=>s.remove(),700);
-      });
-    }
-
-    // ── FLOATING SHAPES (desktop only) ──
-    const shapesEl = document.getElementById('heroShapes');
-    if(shapesEl && !isTouch){
-      function spawnShape(){
-        const el=document.createElement('div'); el.className='shape';
-        const types=['circle','line','sq'];
-        const t=types[Math.floor(Math.random()*types.length)];
-        const size=8+Math.random()*18;
-        const x=5+Math.random()*90; const y=20+Math.random()*70;
-        const dur=4+Math.random()*4;
-        if(t==='circle'){ el.style.cssText=`left:${x}%;top:${y}%;width:${size}px;height:${size}px;border-radius:50%;border:1.5px solid rgba(74,144,217,.3);animation-duration:${dur}s;`; }
-        else if(t==='line'){ el.style.cssText=`left:${x}%;top:${y}%;width:${40+Math.random()*60}px;height:1px;background:linear-gradient(to right,transparent,rgba(74,144,217,.4),transparent);animation-duration:${dur}s;`; }
-        else { el.style.cssText=`left:${x}%;top:${y}%;width:${size}px;height:${size}px;border:1px solid rgba(74,144,217,.2);animation-duration:${dur}s;`; }
-        shapesEl.appendChild(el); setTimeout(()=>el.remove(),dur*1000);
-      }
-      setInterval(spawnShape,800);
-      for(let i=0;i<4;i++) setTimeout(spawnShape,i*200);
-    }
-
-    // ── ZEN HABITS QR — tap on touch devices ──
-    const zenCard = document.querySelector('.zen-card');
-    if (zenCard && isTouch) {
-      zenCard.addEventListener('click', e => {
-        const overlay = zenCard.querySelector('.zen-overlay');
-        if (overlay && overlay.contains(e.target)) {
-          zenCard.classList.remove('qr-active');
-        } else {
-          zenCard.classList.toggle('qr-active');
-        }
-      });
-    }
-
-    // ── STAT DIALOGS ──
-    const dialogs = {
-      olympiad: {
-        icon:'◆', tag:'Achievement',
-        title:'11th Rank — CR Rao International Statistics Olympiad',
-        body:'Competed in the prestigious CR Rao International Statistics Olympiad — one of the most respected statistics competitions in the country — and secured 11th rank nationally. This reflects a strong foundation in statistical theory, probability, and applied data reasoning that directly underpins the ML and data science work I do today.',
-        pills:['Statistics','Probability','Data Reasoning','National Level','CR Rao Olympiad']
-      },
-      ml: {
-        icon:'◎', tag:'Research · ML',
-        title:'89% Accuracy — Allele Classification Model',
-        body:'As part of a sponsored R&D project and research paper on genetic data analysis, I designed and trained a Random Forest Classifier to classify alleles and study their evolutionary origin. Through hyperparameter tuning and feature engineering on biological datasets, the model achieved 89% accuracy on unseen test data — contributing to a peer-reviewed research study.',
-        pills:['Random Forest','Hyperparameter Tuning','Feature Engineering','Python','Scikit-learn','Research Paper']
-      }
-    };
-    const overlay=document.getElementById('modalOverlay');
-    const mIcon=document.getElementById('mIcon'), mTag=document.getElementById('mTag');
-    const mTitle=document.getElementById('mTitle'), mBody=document.getElementById('mBody');
-    const mPills=document.getElementById('mPills');
-    const mClose=document.getElementById('modalClose');
-
-    function openDialog(key){
-      const d=dialogs[key]; if(!d) return;
-      mIcon.textContent=d.icon; mTag.textContent=d.tag;
-      mTitle.textContent=d.title; mBody.textContent=d.body;
-      mPills.innerHTML=d.pills.map(p=>`<span class="modal-pill">${p}</span>`).join('');
-      document.body.dataset.scrollY = window.scrollY;
-      document.body.style.overflow = 'hidden';
-      overlay.classList.add('open');
-      overlay.scrollTop = 0;
-    }
-    function closeDialog(){
+function closeDialog(){
       overlay.classList.remove('open');
       document.body.style.overflow = '';
       window.scrollTo({ top: parseInt(document.body.dataset.scrollY || '0'), behavior: 'instant' });
@@ -2066,9 +1998,81 @@ On the SDG 6 front, Vidhai took up a <strong>water purification project</strong>
     document.querySelectorAll('[data-dialog]').forEach(el => {
       el.addEventListener('click', () => openDialog(el.dataset.dialog));
     });
-    mClose.addEventListener('click', closeDialog);
-    overlay.addEventListener('click', e => { if (e.target === overlay) closeDialog(); });
+
+    // ── MOBILE DRAWER ──
+    const menuBtn      = document.getElementById('menuBtn');
+    const mobileDrawer = document.getElementById('mobileDrawer');
+    const drawerClose  = document.getElementById('drawerClose');
+    function openDrawer()  { mobileDrawer.classList.add('open');    document.body.style.overflow = 'hidden'; }
+    function closeDrawer() { mobileDrawer.classList.remove('open'); document.body.style.overflow = ''; }
+    if (menuBtn)     menuBtn.addEventListener('click', openDrawer);
+    if (drawerClose) drawerClose.addEventListener('click', closeDrawer);
+    document.querySelectorAll('.mobile-drawer a').forEach(a => a.addEventListener('click', closeDrawer));
+
+    // ── REVEAL ON SCROLL ──
+    const revealObs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); } });
+    }, { threshold: .1, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+    // ── DARK MODE ──
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon   = document.getElementById('themeIcon');
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) setDark();
+    function setDark()  { document.body.classList.add('dark');    if(themeIcon) themeIcon.textContent = '🌙'; }
+    function setLight() { document.body.classList.remove('dark'); if(themeIcon) themeIcon.textContent = '☀️'; }
+    if (themeToggle) themeToggle.addEventListener('click', () =>
+      document.body.classList.contains('dark') ? setLight() : setDark()
+    );
+
+    // ── SPARKLE TRAIL (desktop only) ──
+    if (!isTouch) {
+      let lastSpark = 0;
+      document.addEventListener('mousemove', e => {
+        const now = Date.now(); if (now - lastSpark < 60) return; lastSpark = now;
+        const s = document.createElement('div'); s.className = 'sparkle';
+        const size = 4 + Math.random() * 5; const hue = 200 + Math.random() * 40;
+        s.style.cssText = `left:${e.clientX}px;top:${e.clientY}px;width:${size}px;height:${size}px;background:hsl(${hue},80%,65%);`;
+        document.body.appendChild(s); setTimeout(() => s.remove(), 700);
+      });
+    }
+
+    // ── FLOATING SHAPES (desktop only) ──
+    const shapesEl = document.getElementById('heroShapes');
+    if (shapesEl && !isTouch) {
+      function spawnShape() {
+        const el = document.createElement('div'); el.className = 'shape';
+        const types = ['circle','line','sq'];
+        const t = types[Math.floor(Math.random() * types.length)];
+        const size = 8 + Math.random() * 18;
+        const x = 5 + Math.random() * 90; const y = 20 + Math.random() * 70;
+        const dur = 4 + Math.random() * 4;
+        if (t === 'circle') el.style.cssText = `left:${x}%;top:${y}%;width:${size}px;height:${size}px;border-radius:50%;border:1.5px solid rgba(74,144,217,.3);animation-duration:${dur}s;`;
+        else if (t === 'line') el.style.cssText = `left:${x}%;top:${y}%;width:${40+Math.random()*60}px;height:1px;background:linear-gradient(to right,transparent,rgba(74,144,217,.4),transparent);animation-duration:${dur}s;`;
+        else el.style.cssText = `left:${x}%;top:${y}%;width:${size}px;height:${size}px;border:1px solid rgba(74,144,217,.2);animation-duration:${dur}s;`;
+        shapesEl.appendChild(el); setTimeout(() => el.remove(), dur * 1000);
+      }
+      setInterval(spawnShape, 800);
+      for (let i = 0; i < 4; i++) setTimeout(spawnShape, i * 200);
+    }
+
+    // ── ZEN QR TAP (touch only) ──
+    const zenCard = document.querySelector('.zen-card');
+    if (zenCard && isTouch) {
+      zenCard.addEventListener('click', e => {
+        const ov = zenCard.querySelector('.zen-overlay');
+        if (ov && ov.contains(e.target)) zenCard.classList.remove('qr-active');
+        else zenCard.classList.toggle('qr-active');
+      });
+    }
+
+    // ── MODAL CLOSE ──
+    const mClose = document.getElementById('modalClose');
+    const overlay = document.getElementById('modalOverlay');
+    if (mClose) mClose.addEventListener('click', closeDialog);
+    if (overlay) overlay.addEventListener('click', e => { if (e.target === overlay) closeDialog(); });
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDialog(); });
+
   </script>
 </body>
 </html>
