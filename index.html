@@ -37,7 +37,7 @@
       --muted:         #6E84A3;
       --border:        #CBD8EF;
       --border-strong: #9AB3D8;
-      --gap:           120px;
+      --gap:           136px;
       --radius:        4px;
       --shadow-card:   0 4px 24px rgba(10,22,40,0.07), 0 1px 4px rgba(10,22,40,0.04);
       --shadow-hover:  0 20px 60px rgba(59,130,246,0.12), 0 4px 16px rgba(10,22,40,0.08);
@@ -68,7 +68,8 @@
     body {
       font-family: 'Outfit', sans-serif;
       font-weight: 300;
-      line-height: 1.7;
+      font-size: 17px;
+      line-height: 1.8;
       background: var(--white);
       color: var(--navy);
       overflow-x: hidden;
@@ -299,7 +300,7 @@
     .hero-eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--gold); opacity: .6; }
     .hero-name {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(4rem, 6.5vw, 9rem);
+      font-size: clamp(4.5rem, 7vw, 10rem);
       font-weight: 700; line-height: .88;
       letter-spacing: -.02em;
       color: #FFFFFF;
@@ -307,8 +308,8 @@
     }
     .hero-name em { font-style: italic; color: var(--blue-light); display: block; }
     .hero-tagline {
-      margin-top: 30px; font-size: .97rem; font-weight: 300;
-      color: rgba(255,255,255,.5); max-width: 420px; line-height: 1.8;
+      margin-top: 30px; font-size: 1.08rem; font-weight: 300;
+      color: rgba(255,255,255,.55); max-width: 440px; line-height: 1.85;
       opacity: 0; animation: fadeUp .8s ease .55s forwards;
       font-family: 'Outfit', sans-serif;
     }
@@ -418,9 +419,9 @@
     .sec-label::after { content: ''; width: 48px; height: 1px; background: var(--blue); opacity: .35; }
     .sec-title {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2.2rem, 4vw, 3.4rem);
+      font-size: clamp(2.5rem, 4.5vw, 3.8rem);
       font-weight: 600; line-height: 1.08; letter-spacing: -.01em;
-      margin-bottom: 56px; color: var(--navy);
+      margin-bottom: 64px; color: var(--navy);
     }
     .watermark {
       position: absolute; right: 60px; top: 80px;
@@ -444,14 +445,14 @@
       border: 1px solid var(--border-strong); border-radius: var(--radius); z-index: -1;
     }
     .about-img-frame img[alt] { background: var(--off-white); } /* alt text fallback color */
-    .about-texts { display: flex; flex-direction: column; gap: 20px; }
-    .about-bio { font-size: .97rem; line-height: 1.85; color: var(--text); }
+    .about-texts { display: flex; flex-direction: column; gap: 26px; }
+    .about-bio { font-size: 1.05rem; line-height: 1.9; color: var(--text); }
     .about-bio strong { color: var(--navy); font-weight: 500; }
     .pull-quote {
       border-left: 2px solid var(--gold); padding: 16px 24px;
       background: var(--off-white); border-radius: 0 var(--radius) var(--radius) 0;
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.1rem; font-style: italic; color: var(--navy); line-height: 1.6;
+      font-size: 1.18rem; font-style: italic; color: var(--navy); line-height: 1.65;
     }
     .stats-mini { display: flex; gap: 36px; padding-top: 20px; border-top: 1px solid var(--border); }
     .stat-mini { display: flex; flex-direction: column; gap: 4px; }
@@ -468,7 +469,7 @@
     .edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
     .edu-card {
       background: var(--white); border: 1px solid var(--border); border-radius: var(--radius);
-      padding: 40px 36px; position: relative; overflow: hidden;
+      padding: 44px 40px; position: relative; overflow: hidden;
       transition: border-color .3s, transform .3s, box-shadow .3s;
       box-shadow: var(--shadow-card);
     }
@@ -480,22 +481,41 @@
     }
     .edu-card:hover::before { width: 100%; }
     .edu-year { font-family: 'JetBrains Mono', monospace; font-size: .68rem; letter-spacing: .1em; color: var(--blue); margin-bottom: 14px; }
-    .edu-degree { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 600; line-height: 1.25; margin-bottom: 8px; color: var(--navy); }
-    .edu-school { font-size: .86rem; color: var(--muted); line-height: 1.5; }
+    .edu-degree { font-family: 'Cormorant Garamond', serif; font-size: 1.45rem; font-weight: 600; line-height: 1.25; margin-bottom: 10px; color: var(--navy); }
+    .edu-school { font-size: .94rem; color: var(--muted); line-height: 1.6; }
 
     /* ── EXPERIENCE ── */
     #experience { background: var(--white); }
     .exp-list { display: flex; flex-direction: column; }
-    .exp-item { display: grid; grid-template-columns: 200px 1fr; gap: 48px; padding: 52px 0; border-bottom: 1px solid var(--border); }
+    .exp-item { display: grid; grid-template-columns: 200px 1fr; gap: 52px; padding: 60px 0; border-bottom: 1px solid var(--border); }
     .exp-item:first-child { border-top: 1px solid var(--border); }
     .exp-meta { display: flex; flex-direction: column; gap: 6px; padding-top: 4px; }
     .exp-period { font-family: 'JetBrains Mono', monospace; font-size: .68rem; letter-spacing: .08em; color: var(--blue); }
     .exp-type { font-size: .68rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); font-family: 'JetBrains Mono', monospace; }
-    .exp-role { font-family: 'Cormorant Garamond', serif; font-size: 1.55rem; font-weight: 600; margin-bottom: 4px; color: var(--navy); letter-spacing: -.01em; }
-    .exp-company { font-size: .84rem; color: var(--blue); font-weight: 500; letter-spacing: .04em; margin-bottom: 18px; }
-    .exp-bullets { display: flex; flex-direction: column; gap: 10px; }
-    .exp-bullet { font-size: .91rem; color: var(--text); line-height: 1.7; padding-left: 18px; position: relative; }
+    .exp-role { font-family: 'Cormorant Garamond', serif; font-size: 1.7rem; font-weight: 600; margin-bottom: 6px; color: var(--navy); letter-spacing: -.01em; }
+    .exp-company { font-size: .92rem; color: var(--blue); font-weight: 500; letter-spacing: .04em; margin-bottom: 22px; }
+    .exp-bullets { display: flex; flex-direction: column; gap: 14px; }
+    .exp-bullet { font-size: 1rem; color: var(--text); line-height: 1.8; padding-left: 20px; position: relative; }
     .exp-bullet::before { content: ''; position: absolute; left: 0; top: 11px; width: 5px; height: 1px; background: var(--gold); }
+
+    /* ── EXPERIENCE CRISP CARD ── */
+    .exp-body { display: flex; flex-direction: column; }
+    .exp-item[data-expdialog] { transition: background .25s, padding .25s; border-radius: 6px; }
+    .exp-item[data-expdialog]:hover { background: var(--off-white); padding-left: 16px; }
+    body.dark .exp-item[data-expdialog]:hover { background: rgba(255,255,255,.03); }
+    .exp-crisp { display: flex; flex-direction: column; gap: 10px; margin-bottom: 22px; }
+    .exp-crisp-item {
+      font-size: 1rem; color: var(--text); line-height: 1.6;
+      display: flex; align-items: baseline; gap: 10px;
+    }
+    .exp-read-more {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: 'JetBrains Mono', monospace; font-size: .7rem;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: var(--blue); opacity: .7;
+      transition: opacity .2s, gap .2s;
+    }
+    .exp-item[data-expdialog]:hover .exp-read-more { opacity: 1; gap: 10px; color: var(--gold); }
 
     /* ── PROJECTS ── */
     #projects { background: var(--navy-mid); background: linear-gradient(170deg, #0A1628 0%, #0F2040 100%); }
@@ -506,7 +526,7 @@
     #projects .watermark { color: rgba(59,130,246,.04); opacity: 1; }
     .projects-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
     .proj-card {
-      background: rgba(255,255,255,.04); padding: 40px 34px;
+      background: rgba(255,255,255,.04); padding: 48px 38px;
       position: relative; overflow: hidden;
       display: flex; flex-direction: column; gap: 14px;
       transition: background .35s, transform .3s;
@@ -527,8 +547,8 @@
       color: rgba(201,168,76,.4); opacity: 0; transition: opacity .3s;
     }
     .proj-card:hover .proj-corner { opacity: 1; }
-    .proj-title { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 600; color: #FFFFFF; line-height: 1.2; }
-    .proj-desc { font-size: .86rem; color: rgba(255,255,255,.45); line-height: 1.72; flex: 1; }
+    .proj-title { font-family: 'Cormorant Garamond', serif; font-size: 1.45rem; font-weight: 600; color: #FFFFFF; line-height: 1.25; }
+    .proj-desc { font-size: .97rem; color: rgba(255,255,255,.5); line-height: 1.8; flex: 1; }
     .proj-tags { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 6px; }
     .proj-tag {
       font-size: .63rem; letter-spacing: .1em; text-transform: uppercase;
@@ -747,7 +767,7 @@
       letter-spacing: .12em; text-transform: uppercase; color: var(--blue);
       padding-bottom: 12px; border-bottom: 1px solid var(--border);
     }
-    .skill-item { display: flex; align-items: center; gap: 10px; font-size: .87rem; color: var(--text); padding: 7px 0; transition: color .2s; }
+    .skill-item { display: flex; align-items: center; gap: 10px; font-size: .97rem; color: var(--text); padding: 9px 0; transition: color .2s; }
     .skill-item::before { content: ''; width: 3px; height: 3px; border-radius: 50%; background: var(--border-strong); flex-shrink: 0; transition: background .2s; }
     .skill-item:hover { color: var(--navy); }
     .skill-item:hover::before { background: var(--gold); }
@@ -776,18 +796,18 @@
     /* ── CERTIFICATIONS ── */
     #certifications { background: var(--off-white); }
     .cert-list { display: flex; flex-direction: column; }
-    .cert-item { display: flex; align-items: center; gap: 16px; padding: 22px 0; border-bottom: 1px solid var(--border); transition: padding-left .3s; }
+    .cert-item { display: flex; align-items: center; gap: 16px; padding: 26px 0; border-bottom: 1px solid var(--border); transition: padding-left .3s; }
     .cert-item:first-child { border-top: 1px solid var(--border); }
     .cert-item:hover { padding-left: 10px; }
     .cert-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
-    .cert-name { font-size: .94rem; color: var(--navy); font-weight: 400; flex: 1; }
+    .cert-name { font-size: 1.02rem; color: var(--navy); font-weight: 400; flex: 1; }
     .cert-issuer { font-family: 'JetBrains Mono', monospace; font-size: .75rem; color: var(--muted); letter-spacing: .06em; }
 
     /* ── ACHIEVEMENTS ── */
     #achievements { background: var(--white); }
     .ach-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
     .ach-card {
-      padding: 32px; border: 1px solid var(--border);
+      padding: 36px; border: 1px solid var(--border);
       background: var(--off-white); border-radius: var(--radius);
       display: flex; gap: 18px; align-items: flex-start;
       transition: border-color .3s, transform .3s, box-shadow .3s;
@@ -801,8 +821,8 @@
       flex-shrink: 0;
     }
     body.dark .ach-icon { background: rgba(201,168,76,.15); }
-    .ach-title { font-weight: 500; color: var(--navy); margin-bottom: 5px; font-size: .92rem; }
-    .ach-sub { font-size: .81rem; color: var(--muted); line-height: 1.55; }
+    .ach-title { font-weight: 500; color: var(--navy); margin-bottom: 6px; font-size: 1rem; }
+    .ach-sub { font-size: .9rem; color: var(--muted); line-height: 1.65; }
 
     /* ── PODCAST ── */
     #podcast { background: #0B1D3A; min-height: 70vh; display: flex; align-items: center; justify-content: center; text-align: center; position: relative; overflow: hidden; }
@@ -830,7 +850,7 @@
     .pod-label { font-family: 'JetBrains Mono', monospace; font-size: .68rem; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; }
     .pod-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.4rem,5vw,4.5rem); font-weight: 700; color: #FFFFFF; line-height: .95; margin-bottom: 18px; letter-spacing: -.02em; font-style: italic; }
     .pod-title em { font-style: normal; color: var(--blue-light); }
-    .pod-tagline { font-size: .98rem; color: rgba(255,255,255,.45); line-height: 1.65; margin-bottom: 36px; }
+    .pod-tagline { font-size: 1.1rem; color: rgba(255,255,255,.5); line-height: 1.75; margin-bottom: 40px; }
     .pod-badge { display: inline-flex; align-items: center; gap: 10px; border: 1px solid rgba(201,168,76,.3); padding: 11px 26px; font-size: .73rem; letter-spacing: .16em; text-transform: uppercase; color: var(--gold-light); border-radius: 40px; animation: borderPulse 3s ease-in-out infinite; font-family: 'JetBrains Mono', monospace; }
     @keyframes borderPulse { 0%,100%{border-color:rgba(201,168,76,.3)} 50%{border-color:rgba(201,168,76,.8)} }
     .pod-blink { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); animation: blink 1.4s ease-in-out infinite; }
@@ -838,7 +858,7 @@
     /* ── CONTACT ── */
     #contact { background: var(--white); }
     .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
-    .contact-intro { font-size: .98rem; color: var(--text); line-height: 1.85; margin-bottom: 32px; }
+    .contact-intro { font-size: 1.08rem; color: var(--text); line-height: 1.9; margin-bottom: 36px; }
     .contact-links { display: flex; flex-direction: column; }
     .contact-row {
       display: flex; align-items: center; gap: 16px;
@@ -858,14 +878,14 @@
     }
     a.contact-row:hover .contact-icon-wrap { background: var(--blue); color: #fff; }
     .contact-row-label { font-size: .73rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); transition: color .3s; font-family: 'JetBrains Mono', monospace; }
-    .contact-row-value { font-size: .9rem; color: var(--navy); margin-top: 1px; }
+    .contact-row-value { font-size: 1rem; color: var(--navy); margin-top: 2px; }
 
     .contact-card {
       background: linear-gradient(145deg, #0A1628 0%, #0F2040 100%); padding: 48px; border-radius: var(--radius);
       box-shadow: 0 20px 60px rgba(10,22,40,.25);
     }
     body.dark .contact-card { background: linear-gradient(145deg, #040B17 0%, #06101E 100%); }
-    .contact-card-title { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 600; margin-bottom: 10px; color: #FFFFFF; letter-spacing: -.01em; }
+    .contact-card-title { font-family: 'Cormorant Garamond', serif; font-size: 2.4rem; font-weight: 600; margin-bottom: 12px; color: #FFFFFF; letter-spacing: -.01em; }
     .contact-card-sub { font-size: .86rem; color: rgba(255,255,255,.4); margin-bottom: 28px; }
     .email-box { font-family: 'JetBrains Mono', monospace; font-size: .88rem; color: var(--blue-light); padding: 14px 18px; border: 1px dashed rgba(59,130,246,.35); background: rgba(59,130,246,.06); letter-spacing: .03em; margin-bottom: 24px; border-radius: 2px; }
     .copy-btn {
@@ -941,9 +961,9 @@
       background: var(--navy-pale); padding: 5px 12px; border-radius: 40px; margin-bottom: 16px;
     }
     .modal-tag::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--blue); }
-    .modal-title { font-family: 'Cormorant Garamond', serif; font-size: 1.7rem; font-weight: 600; line-height: 1.15; color: var(--navy); margin-bottom: 14px; letter-spacing: -.01em; }
+    .modal-title { font-family: 'Cormorant Garamond', serif; font-size: 1.9rem; font-weight: 600; line-height: 1.15; color: var(--navy); margin-bottom: 16px; letter-spacing: -.01em; }
     .modal-body {
-      font-size: .91rem; color: var(--text); line-height: 1.78;
+      font-size: 1rem; color: var(--text); line-height: 1.85;
       margin-bottom: 24px; word-break: break-word;
     }
     .modal-body strong { color: var(--navy); }
@@ -1241,11 +1261,11 @@
     }
     .beyond-feat .beyond-card-tag { color: var(--gold-light); }
     .beyond-card-title {
-      font-family: 'Cormorant Garamond',serif; font-size: 1.3rem;
-      font-weight: 600; color: var(--navy); line-height: 1.2;
+      font-family: 'Cormorant Garamond',serif; font-size: 1.45rem;
+      font-weight: 600; color: var(--navy); line-height: 1.25;
     }
-    .beyond-feat .beyond-card-title { color: #fff; font-size: 1.7rem; }
-    .beyond-card-desc { font-size: .87rem; color: var(--text); line-height: 1.65; }
+    .beyond-feat .beyond-card-title { color: #fff; font-size: 1.9rem; }
+    .beyond-card-desc { font-size: .97rem; color: var(--text); line-height: 1.75; }
     .beyond-feat .beyond-card-desc { color: rgba(255,255,255,.65); }
     .beyond-feat .beyond-card-desc strong { color: #fff; }
     .beyond-card-desc strong { color: var(--navy); }
@@ -1482,39 +1502,44 @@
       <h2 class="sec-title">Turning complexity<br>into production systems</h2>
     </div>
     <div class="exp-list">
-      <div class="exp-item reveal">
+
+      <!-- FULL TIME -->
+      <div class="exp-item reveal" data-expdialog="fulltime" style="cursor:pointer;" tabindex="0" role="button" aria-label="View full details for Junior Developer role">
         <div class="exp-meta">
           <span class="exp-period">Jun 2024 — Present</span>
           <span class="exp-type">Full-time</span>
         </div>
-        <div>
+        <div class="exp-body">
           <div class="exp-role">Junior Developer</div>
           <div class="exp-company">Chella Software Pvt. Ltd. · Madurai, Tamil Nadu</div>
-          <div class="exp-bullets">
-            <div class="exp-bullet">Involved in the full Software Development Lifecycle (SDLC) across multiple deliverables — from business requirement analysis and system design through to implementation, testing, deployment, and production support, ensuring high-quality, on-time delivery.</div>
-            <div class="exp-bullet">Optimised performance-critical C modules for a high-throughput trading platform serving India's leading stock exchange — delivering substantial gains in execution speed and memory efficiency under peak market loads while reducing operational overhead and manual intervention.</div>
-            <div class="exp-bullet">Designed and enhanced core trade-flow architecture, gaining deep expertise in end-to-end trading system workflows and mission-critical transaction processing pipelines.</div>
-            <div class="exp-bullet">Optimised performance-critical trading application code by leveraging knowledge of multithreading, MPI, data structures, and space-time complexity — improving execution speed and resource efficiency under high-load conditions.</div>
-            <div class="exp-bullet">Developed and maintained build and deployment automation using Makefiles and shell scripts, streamlining multi-node compilation workflows and significantly reducing manual effort in the release process.</div>
-            <div class="exp-bullet">Refactored and extended the trading application codebase to enhance space utilisation and system reliability, significantly reducing manual intervention in day-to-day operations.</div>
+          <div class="exp-crisp">
+            <div class="exp-crisp-item">⚡ Optimised mission-critical C modules for India's leading stock exchange</div>
+            <div class="exp-crisp-item">🧵 Leveraged multithreading &amp; MPI to push execution speed under peak load</div>
+            <div class="exp-crisp-item">🏗️ Designed core trade-flow architecture end-to-end</div>
+            <div class="exp-crisp-item">🔧 Built Makefile &amp; shell-based build automation across multi-node systems</div>
           </div>
+          <div class="exp-read-more">Read full details <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         </div>
       </div>
-      <div class="exp-item reveal">
+
+      <!-- INTERNSHIP -->
+      <div class="exp-item reveal" data-expdialog="intern" style="cursor:pointer;" tabindex="0" role="button" aria-label="View full details for SDE Intern role">
         <div class="exp-meta">
           <span class="exp-period">May 2023 — Apr 2024</span>
           <span class="exp-type">Internship</span>
         </div>
-        <div>
+        <div class="exp-body">
           <div class="exp-role">SDE Intern</div>
           <div class="exp-company">Chella Software Pvt. Ltd.</div>
-          <div class="exp-bullets">
-            <div class="exp-bullet">Conducted REST API testing using Postman and implemented session handling mechanisms for live application workflows.</div>
-            <div class="exp-bullet">Led R&amp;D into integrating Power BI with existing live systems — evaluating feasibility and mapping integration pathways.</div>
-            <div class="exp-bullet">Contributed to a sponsored R&amp;D project on genetic data analysis — built ML classification and clustering models for allele data, achieving <strong>89% accuracy</strong>.</div>
+          <div class="exp-crisp">
+            <div class="exp-crisp-item">🧪 REST API testing &amp; session handling with Postman</div>
+            <div class="exp-crisp-item">📊 R&amp;D on Power BI integration with live systems</div>
+            <div class="exp-crisp-item">🧬 ML model for allele classification — <strong>89% accuracy</strong>, published paper</div>
           </div>
+          <div class="exp-read-more">Read full details <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         </div>
       </div>
+
     </div>
   </section>
 
@@ -1935,7 +1960,7 @@
             <div class="contact-icon-wrap">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
             </div>
-            <div><div class="contact-row-label">Email</div><div class="contact-row-value"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="3a43495b53575552534e520a0d7a5d575b535614595557">[email&#160;protected]</a></div></div>
+            <div><div class="contact-row-label">Email</div><div class="contact-row-value"><a href="mailto:ysaimohith07@gmail.com" style="color:inherit;text-decoration:none;">ysaimohith07@gmail.com</a></div></div>
           </div>
           <a href="https://www.linkedin.com/in/yerramsetti-sai-mohith/" target="_blank" class="contact-row">
             <div class="contact-icon-wrap">
@@ -1961,7 +1986,7 @@
         <div class="contact-card">
           <div class="contact-card-title">Let's connect!!</div>
           <div class="contact-card-sub">Best way to reach me — I reply within 24 hours.</div>
-          <div class="email-box"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ccb5bfada5a1a3a4a5b8a4fcfb8caba1ada5a0e2afa3a1">[email&#160;protected]</a></div>
+          <div class="email-box">ysaimohith07@gmail.com</div>
           <button class="copy-btn" onclick="navigator.clipboard.writeText('ysaimohith07@gmail.com');this.textContent='Copied! ✓';setTimeout(()=>this.textContent='Copy email',2000)">Copy email</button>
         </div>
       </div>
@@ -1989,7 +2014,7 @@
     </div>
   </div>
 
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  <script>
     // ── CURSOR (desktop only) ──
     const isTouch = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
     const cur = document.getElementById('cursor');
@@ -2044,6 +2069,26 @@
 <strong>Approach:</strong> Implemented a <strong>Random Forest Classifier</strong> as the primary model, alongside clustering techniques to group similar allele profiles. Applied feature engineering to extract biologically meaningful signals, performed hyperparameter tuning, and validated on a held-out test set — achieving <strong>89% accuracy on unseen data</strong>.<br><br>
 <strong>Outcome:</strong> The model and findings contributed to a <em>published research paper</em> — a tangible academic output from the internship work.`,
         pills: ['89% Accuracy', 'Random Forest', 'Clustering', 'Genetic Data', 'Feature Engineering', 'Published Research', 'Python', 'Scikit-learn']
+      },
+      fulltime: {
+        icon: '💼', tag: 'Jun 2024 — Present · Full-time',
+        title: 'Junior Developer — Chella Software Pvt. Ltd.',
+        body: `<strong>Chella Software</strong> builds mission-critical infrastructure for India's financial markets — working here means every line of code runs under real market pressure.<br><br>
+<strong>Full SDLC ownership:</strong> Involved end-to-end across multiple deliverables — from requirement analysis and system design through implementation, testing, deployment, and production support.<br><br>
+<strong>Performance-critical C optimisation:</strong> Worked on high-throughput C modules powering a trading platform that serves India's leading stock exchange. Delivered measurable gains in execution speed and memory efficiency under peak market loads, while cutting operational overhead.<br><br>
+<strong>Trade-flow architecture:</strong> Designed and enhanced the core trade-flow — gaining deep expertise in end-to-end trading system workflows and mission-critical transaction processing pipelines.<br><br>
+<strong>Multithreading &amp; systems:</strong> Leveraged multithreading, MPI messaging, data structures, and space-time complexity analysis to push performance ceilings further.<br><br>
+<strong>Build automation:</strong> Built and maintained Makefile and shell-script based build pipelines across multi-node compilation environments — significantly reducing manual release effort.`,
+        pills: ['C', 'Multithreading', 'MPI', 'Trading Systems', 'Low-latency', 'Makefiles', 'Shell Scripting', 'SDLC', 'Production Support']
+      },
+      intern: {
+        icon: '🚀', tag: 'May 2023 — Apr 2024 · Internship',
+        title: 'SDE Intern — Chella Software Pvt. Ltd.',
+        body: `A full-year internship that went far beyond the usual intern scope — contributing to live systems, leading R&D work, and producing a published research output.<br><br>
+<strong>REST API testing:</strong> Conducted comprehensive API testing using Postman and built session handling mechanisms wired into live application workflows.<br><br>
+<strong>Power BI R&D:</strong> Led independent R&D into integrating Microsoft Power BI with existing live systems — scoping feasibility, mapping integration pathways, and producing a technical evaluation report.<br><br>
+<strong>Allele Classification (Published Research):</strong> Contributed to a sponsored genetic data analysis project — built ML classification and clustering models for allele data using Python and Scikit-learn. Achieved <strong>89% accuracy on held-out test data</strong>. The work contributed to a <em>published research paper</em>.`,
+        pills: ['REST APIs', 'Postman', 'Session Handling', 'Power BI', 'R&D', 'ML Modelling', 'Python', '89% Accuracy', 'Published Paper']
       }
     };
 
@@ -2062,6 +2107,12 @@
       overlayEl.classList.add('open');
       overlayEl.scrollTop = 0;
     }
+
+    // ── EXPERIENCE CARD DIALOGS ──
+    document.querySelectorAll('[data-expdialog]').forEach(el => {
+      el.addEventListener('click', () => openDialog(el.dataset.expdialog));
+      el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') openDialog(el.dataset.expdialog); });
+    });
 
     function closeDialog(){
       const overlayEl = document.getElementById('modalOverlay');
