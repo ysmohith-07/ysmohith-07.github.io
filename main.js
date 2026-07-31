@@ -10,10 +10,48 @@
         cur.style.left=mx+'px'; cur.style.top=my+'px';
       });
       (function loop(){ rx+=(mx-rx)*.12; ry+=(my-ry)*.12; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(loop); })();
-      document.querySelectorAll('a,button,.proj-card,.edu-card,.ach-card,.stat-hero,.stat-mini,.beyond-card,.bring-card,.timeline-item[data-expdialog],.timeline-item[data-dialog]').forEach(el=>{
+      document.querySelectorAll('a,button,.proj-card,.edu-card,.ach-card,.stat-hero,.stat-mini,.beyond-card,.bring-card,.timeline-item[data-expdialog],.timeline-item[data-dialog],.journey-card').forEach(el=>{
         el.addEventListener('mouseenter',()=>document.body.classList.add('hovering'));
         el.addEventListener('mouseleave',()=>document.body.classList.remove('hovering'));
       });
+
+      const journeyTimeline = document.querySelector('.journey-timeline-inner');
+      const journeyCards = Array.from(document.querySelectorAll('.journey-timeline .journey-card'));
+      if (journeyTimeline && journeyCards.length) {
+        journeyTimeline.addEventListener('pointermove', e => {
+          const containerRect = journeyTimeline.getBoundingClientRect();
+          const centerX = containerRect.left + containerRect.width / 2;
+          const centerY = containerRect.top + containerRect.height / 2;
+          const relX = (e.clientX - centerX) / centerX;
+          const relY = (e.clientY - centerY) / centerY;
+          const easedX = Math.sign(relX) * Math.pow(Math.abs(relX), 1.1);
+          const easedY = Math.sign(relY) * Math.pow(Math.abs(relY), 1.1);
+
+          journeyTimeline.style.setProperty('--timeline-tx', `${(easedX * 8).toFixed(2)}px`);
+          journeyTimeline.style.setProperty('--timeline-ty', `${(easedY * 6).toFixed(2)}px`);
+
+          journeyCards.forEach((card, index) => {
+            const cardRect = card.getBoundingClientRect();
+            const dx = e.clientX - (cardRect.left + cardRect.width / 2);
+            const dy = e.clientY - (cardRect.top + cardRect.height / 2);
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            const strength = Math.max(0, 1 - Math.min(distance / 260, 1));
+            const sideFactor = index % 2 === 0 ? 1 : -1;
+            const tx = (dx * 0.06 + sideFactor * 8) * strength;
+            const ty = (dy * 0.045) * strength;
+            card.style.setProperty('--tx', `${tx.toFixed(2)}px`);
+            card.style.setProperty('--ty', `${ty.toFixed(2)}px`);
+          });
+        });
+        journeyTimeline.addEventListener('pointerleave', () => {
+          journeyTimeline.style.setProperty('--timeline-tx', '0px');
+          journeyTimeline.style.setProperty('--timeline-ty', '0px');
+          journeyCards.forEach(card => {
+            card.style.setProperty('--tx', '0px');
+            card.style.setProperty('--ty', '0px');
+          });
+        });
+      }
     }
 
     // ── SCROLL PROGRESS BAR ──
