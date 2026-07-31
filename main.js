@@ -10,7 +10,7 @@
         cur.style.left=mx+'px'; cur.style.top=my+'px';
       });
       (function loop(){ rx+=(mx-rx)*.12; ry+=(my-ry)*.12; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(loop); })();
-      document.querySelectorAll('a,button,.proj-card,.edu-card,.ach-card,.stat-hero,.stat-mini,.beyond-card').forEach(el=>{
+      document.querySelectorAll('a,button,.proj-card,.edu-card,.ach-card,.stat-hero,.stat-mini,.beyond-card,.bring-card,.timeline-item[data-expdialog],.timeline-item[data-dialog]').forEach(el=>{
         el.addEventListener('mouseenter',()=>document.body.classList.add('hovering'));
         el.addEventListener('mouseleave',()=>document.body.classList.remove('hovering'));
       });
@@ -55,8 +55,8 @@
         pills: ['89% Accuracy', 'Random Forest', 'Clustering', 'Genetic Data', 'Feature Engineering', 'Published Research', 'Python', 'Scikit-learn']
       },
       fulltime: {
-        icon: 'JD', tag: 'Jun 2024 — Present · Full-time',
-        title: 'Junior Developer — Chella Software Pvt. Ltd.',
+        icon: 'SE', tag: 'Jun 2024 — Present · Full-time',
+        title: 'Software Engineer — Chella Software Pvt. Ltd.',
         body: `<strong>Chella Software</strong> builds mission-critical infrastructure for India's financial markets — working here means every line of code runs under real market pressure.<br><br>
 <strong>Full SDLC ownership:</strong> Involved end-to-end across multiple deliverables — from requirement analysis and system design through implementation, testing, deployment, and production support.<br><br>
 <strong>Performance-critical C optimisation:</strong> Worked on high-throughput C modules powering a trading platform that serves India's leading stock exchange. Delivered measurable gains in execution speed and memory efficiency under peak market loads, while cutting operational overhead.<br><br>
@@ -211,6 +211,22 @@ On the SDG 6 front, Vidhai took up a <strong>water purification project</strong>
     if (menuBtn)     menuBtn.addEventListener('click', openDrawer);
     if (drawerClose) drawerClose.addEventListener('click', closeDrawer);
     document.querySelectorAll('.mobile-drawer a').forEach(a => a.addEventListener('click', closeDrawer));
+
+    // ── SCROLLSPY (single-page nav) ──
+    const navAnchors = Array.from(document.querySelectorAll('.nav-links a[href^="#"]'));
+    const spySections = navAnchors
+      .map(a => document.getElementById(a.getAttribute('href').slice(1)))
+      .filter(Boolean);
+    if (spySections.length) {
+      const spyObs = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (!e.isIntersecting) return;
+          const id = e.target.id;
+          navAnchors.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + id));
+        });
+      }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+      spySections.forEach(sec => spyObs.observe(sec));
+    }
 
     // ── REVEAL ON SCROLL ──
     const revealObs = new IntersectionObserver(entries => {
