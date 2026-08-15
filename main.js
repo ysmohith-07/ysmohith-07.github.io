@@ -1,4 +1,36 @@
 
+    // ── LANDING PAGE: hard lock against scrolling (belt-and-suspenders for the
+    // CSS :has() rule, in case the browser doesn't support it) ──
+    if (document.body.classList.contains('landing')) {
+      document.documentElement.style.overflow = 'hidden';
+    }
+
+    // ── RETRACTABLE NAV (every page except the landing page): toggle button
+    // opens/closes it, clicking elsewhere or Escape closes it, hover-reveal
+    // is handled purely in CSS ──
+    if (!document.body.classList.contains('landing')) {
+      const navToggle = document.getElementById('navToggle');
+      const navEl = document.getElementById('navbar');
+      if (navToggle && navEl) {
+        navToggle.addEventListener('click', () => {
+          const open = document.body.classList.toggle('nav-open');
+          navToggle.setAttribute('aria-expanded', open);
+        });
+        document.addEventListener('click', e => {
+          if (!document.body.classList.contains('nav-open')) return;
+          if (navEl.contains(e.target) || navToggle.contains(e.target)) return;
+          document.body.classList.remove('nav-open');
+          navToggle.setAttribute('aria-expanded', 'false');
+        });
+        document.addEventListener('keydown', e => {
+          if (e.key === 'Escape' && document.body.classList.contains('nav-open')) {
+            document.body.classList.remove('nav-open');
+            navToggle.setAttribute('aria-expanded', 'false');
+          }
+        });
+      }
+    }
+
     // ── CURSOR (desktop only) ──
     const isTouch = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
     const cur = document.getElementById('cursor');
@@ -10,48 +42,10 @@
         cur.style.left=mx+'px'; cur.style.top=my+'px';
       });
       (function loop(){ rx+=(mx-rx)*.12; ry+=(my-ry)*.12; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(loop); })();
-      document.querySelectorAll('a,button,.proj-card,.edu-card,.ach-card,.stat-hero,.stat-mini,.beyond-card,.bring-card,.timeline-item[data-expdialog],.timeline-item[data-dialog],.journey-card').forEach(el=>{
+      document.querySelectorAll('a,button,.proj-card,.stat-hero,.stat-mini,.beyond-card,.beyond-sm,.index-row,.timeline-row[data-expdialog],[data-dialog],[data-bdialog]').forEach(el=>{
         el.addEventListener('mouseenter',()=>document.body.classList.add('hovering'));
         el.addEventListener('mouseleave',()=>document.body.classList.remove('hovering'));
       });
-
-      const journeyTimeline = document.querySelector('.journey-timeline-inner');
-      const journeyCards = Array.from(document.querySelectorAll('.journey-timeline .journey-card'));
-      if (journeyTimeline && journeyCards.length) {
-        journeyTimeline.addEventListener('pointermove', e => {
-          const containerRect = journeyTimeline.getBoundingClientRect();
-          const centerX = containerRect.left + containerRect.width / 2;
-          const centerY = containerRect.top + containerRect.height / 2;
-          const relX = (e.clientX - centerX) / centerX;
-          const relY = (e.clientY - centerY) / centerY;
-          const easedX = Math.sign(relX) * Math.pow(Math.abs(relX), 1.1);
-          const easedY = Math.sign(relY) * Math.pow(Math.abs(relY), 1.1);
-
-          journeyTimeline.style.setProperty('--timeline-tx', `${(easedX * 8).toFixed(2)}px`);
-          journeyTimeline.style.setProperty('--timeline-ty', `${(easedY * 6).toFixed(2)}px`);
-
-          journeyCards.forEach((card, index) => {
-            const cardRect = card.getBoundingClientRect();
-            const dx = e.clientX - (cardRect.left + cardRect.width / 2);
-            const dy = e.clientY - (cardRect.top + cardRect.height / 2);
-            const distance = Math.sqrt(dx * dx + dy * dy);
-            const strength = Math.max(0, 1 - Math.min(distance / 260, 1));
-            const sideFactor = index % 2 === 0 ? 1 : -1;
-            const tx = (dx * 0.06 + sideFactor * 8) * strength;
-            const ty = (dy * 0.045) * strength;
-            card.style.setProperty('--tx', `${tx.toFixed(2)}px`);
-            card.style.setProperty('--ty', `${ty.toFixed(2)}px`);
-          });
-        });
-        journeyTimeline.addEventListener('pointerleave', () => {
-          journeyTimeline.style.setProperty('--timeline-tx', '0px');
-          journeyTimeline.style.setProperty('--timeline-ty', '0px');
-          journeyCards.forEach(card => {
-            card.style.setProperty('--tx', '0px');
-            card.style.setProperty('--ty', '0px');
-          });
-        });
-      }
     }
 
     // ── SCROLL PROGRESS BAR ──
@@ -73,7 +67,7 @@
     window.addEventListener('scroll', updateNav, { passive: true });
     updateNav();
 
-    // ── DIALOG DATA (stats + beyond) ──
+    // ── DIALOG DATA (stats + timeline) ──
     const dialogData = {
       olympiad: {
         icon: 'OL', tag: 'CR Rao International Statistics Olympiad',
@@ -130,7 +124,7 @@
       overlayEl.scrollTop = 0;
     }
 
-    // ── EXPERIENCE CARD DIALOGS ──
+    // ── TIMELINE ROW DIALOGS ──
     document.querySelectorAll('[data-expdialog]').forEach(el => {
       el.addEventListener('click', () => openDialog(el.dataset.expdialog));
       el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') openDialog(el.dataset.expdialog); });
@@ -194,7 +188,6 @@ On the SDG 6 front, Vidhai took up a <strong>water purification project</strong>
         const key = el.dataset.bdialog;
         const d = beyondData[key];
         if (!d) return;
-        const overlay = document.getElementById('modalOverlay');
         document.getElementById('mIcon').textContent  = d.icon;
         document.getElementById('mTag').textContent   = d.tag;
         document.getElementById('mTitle').textContent = d.title;
@@ -220,7 +213,7 @@ On the SDG 6 front, Vidhai took up a <strong>water purification project</strong>
         let pillsHTML = '';
         if (d.photo) {
           pillsHTML += `<div class="bdialog-photo-placeholder" id="photoWrap">
-            <img src="${d.photo}" alt="${d.title}" onerror="this.parentElement.classList.remove('has-photo');this.parentElement.innerHTML='<svg width=\\'32\\' height=\\'32\\' viewBox=\\'0 0 24 24\\' fill=\\'none\\' stroke=\\'currentColor\\' stroke-width=\\'1.5\\'><rect x=\\'3\\' y=\\'3\\' width=\\'18\\' height=\\'18\\' rx=\\'2\\'></rect><circle cx=\\'8.5\\' cy=\\'8.5\\' r=\\'1.5\\'></circle><path d=\\'M21 15l-5-5L5 21\\'></path></svg><span>${d.photo}</span><span style=\\'opacity:.5;font-size:.68rem\\'>Upload this file to your repo</span>'" class="has-photo" style="width:100%;height:100%;object-fit:cover;border-radius:8px;display:block;" />
+            <img src="${d.photo}" alt="${d.title}" onerror="this.parentElement.classList.remove('has-photo');this.parentElement.innerHTML='<svg width=\\'32\\' height=\\'32\\' viewBox=\\'0 0 24 24\\' fill=\\'none\\' stroke=\\'currentColor\\' stroke-width=\\'1.5\\'><rect x=\\'3\\' y=\\'3\\' width=\\'18\\' height=\\'18\\' rx=\\'2\\'></rect><circle cx=\\'8.5\\' cy=\\'8.5\\' r=\\'1.5\\'></circle><path d=\\'M21 15l-5-5L5 21\\'></path></svg><span>${d.photo}</span><span style=\\'opacity:.5;font-size:.68rem\\'>Upload this file to your repo</span>'" class="has-photo" style="width:100%;height:100%;object-fit:cover;display:block;" />
           </div>`;
           pillsHTML += '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;">';
           d.pills.forEach(p => pillsHTML += `<span class="proj-tag">${p}</span>`);
@@ -240,47 +233,18 @@ On the SDG 6 front, Vidhai took up a <strong>water purification project</strong>
       el.addEventListener('click', () => openDialog(el.dataset.dialog));
     });
 
-    // ── MOBILE DRAWER ──
-    const menuBtn      = document.getElementById('menuBtn');
-    const mobileDrawer = document.getElementById('mobileDrawer');
-    const drawerClose  = document.getElementById('drawerClose');
-    function openDrawer()  { mobileDrawer.classList.add('open');    document.body.style.overflow = 'hidden'; }
-    function closeDrawer() { mobileDrawer.classList.remove('open'); document.body.style.overflow = ''; }
-    if (menuBtn)     menuBtn.addEventListener('click', openDrawer);
-    if (drawerClose) drawerClose.addEventListener('click', closeDrawer);
-    document.querySelectorAll('.mobile-drawer a').forEach(a => a.addEventListener('click', closeDrawer));
-
-    // ── SCROLLSPY (single-page nav) ──
-    const navAnchors = Array.from(document.querySelectorAll('.nav-links a[href^="#"]'));
-    const spySections = navAnchors
-      .map(a => document.getElementById(a.getAttribute('href').slice(1)))
-      .filter(Boolean);
-    if (spySections.length) {
-      const spyObs = new IntersectionObserver(entries => {
-        entries.forEach(e => {
-          if (!e.isIntersecting) return;
-          const id = e.target.id;
-          navAnchors.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + id));
-        });
-      }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
-      spySections.forEach(sec => spyObs.observe(sec));
-    }
+    // Active nav link is set per-page via a static "active" class in each HTML file
+    // (this is now a multi-page site, not a single scrolling page — no scrollspy needed).
 
     // ── REVEAL ON SCROLL ──
+    // Positive bottom rootMargin fires the fade-in while the element is still
+    // below the fold, so the 500ms transition finishes before it's actually seen.
     const revealObs = new IntersectionObserver(entries => {
       entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); } });
-    }, { threshold: .1, rootMargin: '0px 0px -40px 0px' });
+    }, { threshold: 0, rootMargin: '0px 0px 200px 0px' });
     document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 
-    // ── DARK MODE ──
-    const themeToggle = document.getElementById('themeToggle');
-    const themeIcon   = document.getElementById('themeIcon');
-    if (window.matchMedia('(prefers-color-scheme: dark)').matches) setDark();
-    function setDark()  { document.body.classList.add('dark');    const s=document.getElementById('iconSun');const m=document.getElementById('iconMoon');if(s)s.style.display='none';if(m)m.style.display=''; }
-    function setLight() { document.body.classList.remove('dark'); const s=document.getElementById('iconSun');const m=document.getElementById('iconMoon');if(s)s.style.display='';if(m)m.style.display='none'; }
-    if (themeToggle) themeToggle.addEventListener('click', () =>
-      document.body.classList.contains('dark') ? setLight() : setDark()
-    );
+    // Site always renders in light mode — no dark mode, no OS-preference detection.
 
     // ── SPARKLE TRAIL (desktop only) ──
     if (!isTouch) {
@@ -288,40 +252,13 @@ On the SDG 6 front, Vidhai took up a <strong>water purification project</strong>
       document.addEventListener('mousemove', e => {
         const now = Date.now(); if (now - lastSpark < 60) return; lastSpark = now;
         const s = document.createElement('div'); s.className = 'sparkle';
-        const size = 4 + Math.random() * 5; const hue = 200 + Math.random() * 40;
-        s.style.cssText = `left:${e.clientX}px;top:${e.clientY}px;width:${size}px;height:${size}px;background:hsl(${hue},80%,65%);`;
-        document.body.appendChild(s); setTimeout(() => s.remove(), 700);
+        const size = 4 + Math.random() * 5;
+        const isAccent = Math.random() > 0.4;
+        s.style.cssText = `left:${e.clientX}px;top:${e.clientY}px;width:${size}px;height:${size}px;background:${isAccent ? 'var(--accent)' : 'var(--ink)'};`;
+        document.body.appendChild(s); setTimeout(() => s.remove(), 600);
       });
     }
 
-    // ── FLOATING SHAPES (desktop only) ──
-    const shapesEl = document.getElementById('heroShapes');
-    if (shapesEl && !isTouch) {
-      function spawnShape() {
-        const el = document.createElement('div'); el.className = 'shape';
-        const types = ['circle','line','sq'];
-        const t = types[Math.floor(Math.random() * types.length)];
-        const size = 8 + Math.random() * 18;
-        const x = 5 + Math.random() * 90; const y = 20 + Math.random() * 70;
-        const dur = 4 + Math.random() * 4;
-        if (t === 'circle') el.style.cssText = `left:${x}%;top:${y}%;width:${size}px;height:${size}px;border-radius:50%;border:1.5px solid rgba(59,130,246,.3);animation-duration:${dur}s;`;
-        else if (t === 'line') el.style.cssText = `left:${x}%;top:${y}%;width:${40+Math.random()*60}px;height:1px;background:linear-gradient(to right,transparent,rgba(59,130,246,.4),transparent);animation-duration:${dur}s;`;
-        else el.style.cssText = `left:${x}%;top:${y}%;width:${size}px;height:${size}px;border:1px solid rgba(59,130,246,.2);animation-duration:${dur}s;`;
-        shapesEl.appendChild(el); setTimeout(() => el.remove(), dur * 1000);
-      }
-      setInterval(spawnShape, 800);
-      for (let i = 0; i < 4; i++) setTimeout(spawnShape, i * 200);
-    }
-
-    // ── ZEN QR TAP (touch only) ──
-    const zenCard = document.querySelector('.zen-card');
-    if (zenCard && isTouch) {
-      zenCard.addEventListener('click', e => {
-        const ov = zenCard.querySelector('.zen-overlay');
-        if (ov && ov.contains(e.target)) zenCard.classList.remove('qr-active');
-        else zenCard.classList.toggle('qr-active');
-      });
-    }
 
     // ── MODAL CLOSE ──
     const mClose = document.getElementById('modalClose');
@@ -329,5 +266,3 @@ On the SDG 6 front, Vidhai took up a <strong>water purification project</strong>
     if (mClose) mClose.addEventListener('click', closeDialog);
     if (overlay) overlay.addEventListener('click', e => { if (e.target === overlay) closeDialog(); });
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDialog(); });
-
-  
