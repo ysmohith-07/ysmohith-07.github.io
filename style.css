@@ -53,7 +53,14 @@
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       transition: background 0.3s ease, color 0.3s ease;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
+    /* Pages with a footer (everything but the landing page) push it to the
+       bottom of the viewport even when content is shorter than the screen. */
+    body:not(.landing) main { flex: 1 0 auto; }
+    body:not(.landing) footer { flex-shrink: 0; }
 
     /* Landing page (index.html) is a single fixed viewport — no scrolling.
        Every other page navigates away to its own separate .html file. */
@@ -569,8 +576,11 @@
     .pod-title { font-family: var(--font-display); font-size: clamp(2.4rem,5vw,4.6rem); font-weight: 900; text-transform: uppercase; color: #FFFFFF; line-height: .92; margin-bottom: 18px; letter-spacing: -.01em; }
     .pod-title span { color: var(--bg-fixed); }
     .pod-tagline { font-size: 1.08rem; color: rgba(255,255,255,.55); line-height: 1.7; margin-bottom: 36px; }
-    .pod-badge { display: inline-flex; align-items: center; gap: 10px; border: var(--bw) solid var(--bg-fixed); padding: 10px 24px; font-size: .74rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: #fff; font-family: var(--font-mono); }
-    .pod-blink { width: 8px; height: 8px; border-radius: 50%; background: var(--bg-fixed); animation: blink 1.4s ease-in-out infinite; }
+    .pod-links { display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: wrap; }
+    .pod-link { display: inline-flex; align-items: center; gap: 8px; border: var(--bw) solid var(--bg-fixed); padding: 10px 22px; font-size: .74rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #fff; font-family: var(--font-mono); text-decoration: none; transition: background .2s, color .2s; }
+    .pod-link:hover { background: var(--bg-fixed); color: var(--ink-fixed); }
+    .pod-link-primary { background: var(--bg-fixed); color: var(--ink-fixed); }
+    .pod-link-primary:hover { background: transparent; color: #fff; }
 
     /* ── CONTACT ── */
     #contact { background: var(--bg); }
@@ -622,14 +632,14 @@
     footer {
       background: var(--ink-fixed); color: rgba(255,255,255,.45);
       padding: 30px 60px;
-      display: flex; justify-content: space-between; align-items: center;
+      display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
       border-top: var(--bw) solid var(--bg-fixed);
       gap: 16px;
     }
-    .footer-name { font-family: var(--font-display); font-size: 1.05rem; font-weight: 800; color: rgba(255,255,255,.85); letter-spacing: .01em; text-transform: uppercase; }
-    .footer-top { font-family: var(--font-mono); font-size: .72rem; font-weight: 600; color: rgba(255,255,255,.5); text-decoration: none; transition: color .2s; }
+    .footer-name { font-family: var(--font-display); font-size: 1.05rem; font-weight: 800; color: rgba(255,255,255,.85); letter-spacing: .01em; text-transform: uppercase; justify-self: start; }
+    .footer-top { font-family: var(--font-mono); font-size: .72rem; font-weight: 600; color: rgba(255,255,255,.5); text-decoration: none; transition: color .2s; justify-self: center; }
     .footer-top:hover { color: var(--bg-fixed); }
-    .footer-copy { font-size: .72rem; letter-spacing: .04em; font-family: var(--font-mono); }
+    .footer-copy { font-size: .72rem; letter-spacing: .04em; font-family: var(--font-mono); justify-self: end; }
 
     /* ── MODAL ── */
     .modal-overlay {
@@ -736,7 +746,8 @@
 
       .contact-grid { grid-template-columns: 1fr; gap: 44px; }
 
-      footer { flex-direction: column; text-align: center; padding: 32px 24px; gap: 10px; }
+      footer { grid-template-columns: 1fr; justify-items: center; text-align: center; padding: 32px 24px; gap: 10px; }
+      .footer-name, .footer-top, .footer-copy { justify-self: center; }
     }
 
     @media (max-width: 768px) {
@@ -821,7 +832,8 @@
       .pod-content { padding: 36px 16px; }
       .pod-title { font-size: 2rem; }
       .pod-tagline { font-size: .88rem; }
-      .pod-badge { font-size: .66rem; padding: 9px 18px; }
+      .pod-links { gap: 10px; }
+      .pod-link { font-size: .66rem; padding: 9px 16px; }
       .pod-logo { width: 130px; height: 130px; }
 
       .contact-card { padding: 24px 16px; }
